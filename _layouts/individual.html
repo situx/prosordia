@@ -97,6 +97,14 @@ WHERE {
     ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
 	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
+  }UNION
+  {
+    BIND(12 AS ?order)
+    BIND("Children" AS ?description)
+    ?individual wdt:P150 ?valueUr .
+    ?valueUr rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }
 } 
 ORDER BY ?order
