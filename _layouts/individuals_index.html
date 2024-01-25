@@ -12,7 +12,6 @@ SELECT ?individual ?individualLabel ?name ?nameLabel ?surname ?surnameLabel ?gen
   BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
   ?individual schema:description ?description .
   FILTER(lang(?description)="en")
-  ?individual wdt:P154 ?gender .
   OPTIONAL {
 	?individual wdt:P248 ?name .
 	?name rdfs:label ?nameLabel .
@@ -39,14 +38,18 @@ SELECT ?individual ?individualLabel ?name ?nameLabel ?surname ?surnameLabel ?gen
 
  $(document).ready(function() {
      sparqlToDataTable(languagesSparql, "#languages",
-		        {'linkPrefixes': {'script': '../script'}});
+		        {	 
+	 'pBar':"progressbar",
+	 'pBarLabel':"progress-label",
+	 'linkPrefixes': {'script': '../script'}});
  });
 
 </script>
 
 <div class="languages">
   <h1>Individuals</h1>
-
+  
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="languages"></table>
  
   
