@@ -32,7 +32,7 @@ WHERE {
     BIND(3 AS ?order)
     BIND("Gender" AS ?description)
     ?name wdt:P625 ?value .
-    ?gender rdfs:label ?valueLabel .
+    ?value rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
     BIND(CONCAT("../lexical_category?q=", SUBSTR(STR(?value), 32),"&qLabel=",?valueLabel)  AS ?value_Url)
   }
