@@ -10,7 +10,7 @@ SELECT
   ?language ?languageLabel ?languageDescription
 WITH {
   SELECT ?language (COUNT(*) AS ?number_of_lexemes) WHERE {
-    [] dct:language ?language .
+    [] wdt:P18 ?language .
   }
   GROUP BY ?language
 } AS %languages
@@ -34,7 +34,7 @@ WHERE {
       (AVG(?statements) AS ?average_number_of_statements)
     {
       [] wikibase:statements ?statements ;
-         dct:language ?language .
+         wdt:P18 ?language .
     }
     GROUP BY ?language
   }
