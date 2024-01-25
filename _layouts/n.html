@@ -13,7 +13,7 @@ WHERE {
   VALUES ?name { wd:${ q } }
   {
     BIND(1 AS ?order)
-    BIND("Lemma" AS ?description)
+    BIND("Name" AS ?description)
     ?name rdfs:label ?value .
 	FILTER(lang(?value)="en")
     BIND(?value AS ?valueLabel)
