@@ -62,8 +62,7 @@ attestedSparql = `
   (?valueLabel AS ?value_) ?value_Url
   ?source ?sourceUrl
   WHERE {
-	?name wdt:P2 wd:${ q } .
-    ?name p:P143 ?value_statement .
+    wd:${ q } p:P143 ?value_statement .
     ?value_statement ps:P143 ?value .
     ?value rdfs:label ?valueLab .
 	OPTIONAL { ?value_statement pq:P105 ?refvol. }
