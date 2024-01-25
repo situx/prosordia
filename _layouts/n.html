@@ -105,32 +105,16 @@ attestedSparql = `
 `
 
 
- compoundsSparql = `
+invidiualsSparql = `
 SELECT
-  ?lexeme ?lexemeLabel
-  ?lexical_category ?lexical_categoryLabel
-  ?other_compounds
+  ?ind ?indLabel ?description
 WHERE {
-  {
-    SELECT
-      ?lexeme
-      (GROUP_CONCAT(?compoundLabel; separator=" // ") AS ?other_compounds)
-    WHERE {
-      ?lexeme wdt:P5238+ wd:${ q } .
-      OPTIONAL {
-        ?lexeme wdt:P5238 ?compound .
-        ?compound wikibase:lemma ?compoundLabel .
-        FILTER (?compound != wd:${ q })
-      }
-    }
-    GROUP BY ?lexeme
-  }    
-  ?lexeme wikibase:lemma ?lexemeLabel .
-  OPTIONAL {
-    ?lexeme wikibase:lexicalCategory ?lexical_category .
-    ?lexical_category rdfs:label ?lexical_categoryLabel .
-    FILTER (LANG(?lexical_categoryLabel) = 'en')
-  }
+  ?ind wdt:P248 wd:${ q } .
+  ?ind wdt:P2 wd:Q7 .
+  ?ind rdfs:label ?indLabel .
+  FILTER(lang(?indLabel)="en")
+  ?ind skos:definition ?description .
+  FILTER(lang(?description)="en")
 }
 `
 
@@ -146,12 +130,12 @@ WHERE {
 			   sDom: 'rt',
 		       });
      sparqlToDataTable(attestedSparql, "#attestedin",
-		       options={paging: false, sDom: 'rt',
+		       options={paging: true, sDom: 'rt',
 			   linkPrefixes: {
 			       sense: '../ls'
 			   }});
-     sparqlToDataTable(compoundsSparql, "#compounds",
-		       options={paging: false, sDom: 'rt',});
+     sparqlToDataTable(individualsSparql, "#individuals",
+		       options={paging: true, sDom: 'rt',});
  });
 
 </script>
@@ -180,9 +164,9 @@ WHERE {
 
     <table class="table table-hover" id="attestedin"></table>
     
-    <h2>Compounds</h2>
+    <h2>Individuals named ${ qLabel }</h2>
 
-    <table class="table table-hover" id="compounds"></table>
+    <table class="table table-hover" id="individuals"></table>
 
     <h2>Compound and derivation graph</h2>
     
