@@ -5,9 +5,7 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 # List of scripts with count of the number of characters
-SELECT
-  ?individual ?individualLabel ?name ?nameLabel ?gender ?genderLabel ?career ?careerLabel ?description
-WHERE {
+SELECT ?individual ?individualLabel ?name ?nameLabel ?gender ?genderLabel ?career ?careerLabel ?description WHERE {
   ?individual wdt:P2 wd:Q7 .
   ?individual rdfs:label ?individualLabell .
   FILTER(lang(?individualLabell)="en")
@@ -29,6 +27,7 @@ WHERE {
 	FILTER(lang(?careerLabel)="en")
   }
 }
+`
 
   numberOfStatementsSparql = `
 SELECT
