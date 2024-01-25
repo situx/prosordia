@@ -25,7 +25,7 @@ WHERE {
     ?name wdt:P18 ?value .
     ?value rdfs:label ?valueLabel .
     FILTER (LANG(?valueLabel) = 'en')
-    BIND(CONCAT("../language?q=", SUBSTR(STR(?value), 36),"&qLabel=",?valueLabel)  AS ?value_Url)
+    BIND(CONCAT("../language?q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
   }
   UNION 
   {
@@ -34,7 +34,7 @@ WHERE {
     ?name wdt:P625 ?value .
     ?value rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
-    BIND(CONCAT("../lexical_category?q=", SUBSTR(STR(?value), 36),"&qLabel=",?valueLabel)  AS ?value_Url)
+    BIND(CONCAT("../lexical_category?q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
   }
   UNION 
   {
@@ -44,12 +44,12 @@ WHERE {
     ?value_statement ps:P2 ?value .
     ?value rdfs:label ?valueLabel .
     FILTER (LANG(?valueLabel) = 'en')
-    BIND(CONCAT("../property_value?p=P31&q=", SUBSTR(STR(?value), 36),"&qLabel=",?valueLabel)  AS ?value_Url)
+    BIND(CONCAT("../property_value?p=P31&q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
     OPTIONAL {
       ?value_statement prov:wasDerivedFrom / pr:P248 ?source_ .
       ?source_ rdfs:label ?source .
       FILTER (LANG(?source) = 'en')
-      BIND(CONCAT("../reference?q=", SUBSTR(STR(?source_), 36))  AS ?sourceUrl)
+      BIND(CONCAT("../reference?q=", SUBSTR(STR(?source_), 37))  AS ?sourceUrl)
     }
   }
 }
@@ -62,6 +62,7 @@ attestedSparql = `
   (?valueLabel AS ?value_) ?value_Url
   ?source ?sourceUrl
   WHERE {
+	?name wdt:P2 wd:${ q } .
     ?name p:P143 ?value_statement .
     ?value_statement ps:P143 ?value .
     ?value rdfs:label ?valueLab .
@@ -76,7 +77,7 @@ attestedSparql = `
 	BIND(CONCAT(?thenum, ?thevol, ?thepage, ?theline) AS ?refnumber)
     FILTER (LANG(?valueLab) = 'en')
     BIND(CONCAT(?valueLab," [",?refnumber,"]") AS ?valueLabel)
-    BIND(CONCAT("../reflistlang?q=", SUBSTR(STR(?value), 36),"&qLabel=",STR(?valueLabel))  AS ?value_Url)
+    BIND(CONCAT("../reflistlang?q=", SUBSTR(STR(?value), 37),"&qLabel=",STR(?valueLabel))  AS ?value_Url)
     OPTIONAL {
       ?value_statement prov:wasDerivedFrom / pr:P927 ?sourceUrl .
       BIND("↗" AS ?source)
@@ -93,7 +94,7 @@ attestedSparql = `
           SUBSTR(STR(SAMPLE(?images)), 52))) AS ?sense_image)
  WHERE {
    wd:${ l } ontolex:sense ?sense .
-   BIND(SUBSTR(STR(?sense), 36) AS ?senseLabel)
+   BIND(SUBSTR(STR(?sense), 37) AS ?senseLabel)
    ?sense skos:definition ?glosss .
    OPTIONAL {
      ?sense wdt:P18 ?images
