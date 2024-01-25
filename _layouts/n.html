@@ -111,7 +111,7 @@ SELECT
 WHERE {
   ?individual wdt:P248 wd:Q512534 .
   ?individual wdt:P2 wd:Q7 .
-  ?individual rdfs:label ?indLabell .
+  ?individual rdfs:label ?individualLabell .
   FILTER(lang(?individualLabell)="en")
   BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
   ?individual schema:description ?description .
