@@ -146,7 +146,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 			}else if(linkcount==1){
 				convertedRow[key] = '<a href="' +
 				(linkPrefixes[key] || "") + 
-				addParamsToLink(detectCorrectParameter(data[i][key].substr(31)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")) +
+				addParamsToLink(detectCorrectParameter(data[i][key].substr(36)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")) +
 				'">' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</a>';
 			}else if(linkcount>1){
 				//console.log(data[i][key])
