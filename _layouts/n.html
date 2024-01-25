@@ -109,11 +109,11 @@ individualsSparql = `
 SELECT
   ?ind ?indLabel ?gender ?description
 WHERE {
-  ?ind wdt:P248 wd:${ q } .
+  ?ind wdt:P248 wd:Q512534 .
   ?ind wdt:P2 wd:Q7 .
   ?ind rdfs:label ?indLabel .
   FILTER(lang(?indLabel)="en")
-  ?ind skos:definition ?description .
+  ?ind schema:description ?description .
   FILTER(lang(?description)="en")
   ?ind wdt:P154 ?gender .
   OPTIONAL {
