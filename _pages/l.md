@@ -1,4 +1,0 @@
----
-layout: l
-title: Lexeme
----
