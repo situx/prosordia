@@ -6,22 +6,29 @@ layout: base
     languagesSparql = `
 # List of scripts with count of the number of characters
 SELECT
-  ?number_of_characters_and_variants
-  ?script ?scriptLabel ?scriptDescription
-WITH {
-  SELECT ?script (COUNT(?chars) AS ?number_of_characters_and_variants) WHERE {
-    ?script wdt:P31 wd:Q8192 .
-	?chars wdt:P282 ?script .
-	#FILTER NOT EXISTS {?chars wdt:P31 wd:Q118867680 . }
-  }
-  GROUP BY ?script
-} AS %languages
+  ?individual ?individualLabel ?name ?nameLabel ?gender ?genderLabel ?career ?careerLabel ?description
 WHERE {
-  INCLUDE %languages
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  ?individual wdt:P2 wd:Q7 .
+  ?individual rdfs:label ?individualLabell .
+  FILTER(lang(?individualLabell)="en")
+  BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
+  ?individual schema:description ?description .
+  FILTER(lang(?description)="en")
+  ?individual wdt:P154 ?gender .
+  OPTIONAL {
+	?individual wdt:P248 ?name .
+	?name rdfs:label ?nameLabel .
+	FILTER(lang(?nameLabel)="en")
+  }
+  OPTIONAL {
+	?gender rdfs:label ?genderLabel .	
+	FILTER(lang(?genderLabel)="en")
+  }
+  OPTIONAL {
+	?career wdt:P165 ?careerLabel .	
+	FILTER(lang(?careerLabel)="en")
+  }
 }
-ORDER BY DESC(?number_of_characters_and_variants)
-  `
 
   numberOfStatementsSparql = `
 SELECT
