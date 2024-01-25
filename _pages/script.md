@@ -1,4 +1,0 @@
----
-layout: script
-title: Script
----

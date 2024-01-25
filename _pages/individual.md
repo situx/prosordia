@@ -1,0 +1,4 @@
+---
+layout: individual
+title: Individual
+---

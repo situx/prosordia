@@ -1,0 +1,181 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+dataSparql = `
+
+SELECT ?description ?value ?valueUrl
+WHERE {
+  BIND(wd:${ q } AS ?individual)
+  {
+    BIND(1 AS ?order)
+    BIND("Name" AS ?description)
+    ?language rdfs:label ?value_string .
+    FILTER (LANG(?value_string) = 'en')
+    BIND(COALESCE(?value_string, ?q) AS ?value)
+  }
+  UNION
+  {
+    BIND(2 AS ?order)
+    BIND("Description" AS ?description)
+    ?individual wdt:P31 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+  UNION
+  {
+    BIND(3 AS ?order)
+    BIND("Gender" AS ?description)
+    ?language wdt:P154 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }  
+  UNION
+  {
+    BIND(4 AS ?order)
+    BIND("Career" AS ?description)
+    ?language wdt:P165 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }  
+  UNION
+  {
+    BIND(5 AS ?order)
+    BIND("Date of birth" AS ?description)
+    ?language wdt:P77 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }  
+  UNION
+  {
+    BIND(6 AS ?order)
+    BIND("Place of birth" AS ?description)
+    ?language wdt:P82 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+  UNION
+  {
+    BIND(7 AS ?order)
+    BIND("Place of address" AS ?description)
+    ?language wdt:P83 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }  
+  UNION
+  {
+    BIND(8 AS ?order)
+    BIND("Father" AS ?description)
+    ?language wdt:P141 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  } 
+  UNION
+  {
+    BIND(9 AS ?order)
+    BIND("Mother" AS ?description)
+    ?language wdt:P141 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  } 
+    UNION
+  {
+    BIND(10 AS ?order)
+    BIND("Siblings" AS ?description)
+    ?language wdt:P203 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+  UNION
+  {
+    SELECT
+      (2 AS ?order)
+      ("Number of characters" AS ?description)
+      (COUNT(?chars) AS ?value)
+    {
+      wd:Q401 wdt:P31 wd:Q8192 .
+	  ?chars wdt:P282 wd:Q401 .
+	  FILTER NOT EXISTS {?chars wdt:P31 wd:Q118867680 . }[] dct:language wd:Q401 .
+      BIND(1 AS ?dummy)
+    }
+    GROUP BY ?dummy
+  }
+} 
+ORDER BY ?order
+`;
+ 
+ attestedSparql = `
+ SELECT DISTINCT
+  (?valueLabel AS ?value_) ?value_Url
+  ?source ?sourceUrl
+  WHERE {
+    wd:${ q } p:P143 ?value_statement .
+    ?value_statement ps:P143 ?value .
+    ?value rdfs:label ?valueLab .
+	OPTIONAL { ?value_statement pq:P105 ?refvol. }
+	OPTIONAL{?value_statement pq:P1810 ?valuenum .}
+	OPTIONAL{?value_statement pq:P7421 ?refline .}
+	OPTIONAL{?value_statement pq:P54 ?refpage .}
+    BIND(COALESCE(CONCAT(?valuenum, " "), "") As ?thenum)
+    BIND(COALESCE(CONCAT("v. ", ?refvol, " "), "") AS ?thevol)
+    BIND(COALESCE(CONCAT("p. ",?refpage), "") As ?thepage)
+    BIND(COALESCE(CONCAT(" l. ",?refline), "") As ?theline)
+	BIND(CONCAT(?thenum, ?thevol, ?thepage, ?theline) AS ?refnumber)
+    FILTER (LANG(?valueLab) = 'en')
+    BIND(CONCAT(?valueLab," [",?refnumber,"]") AS ?valueLabel)
+    BIND(CONCAT("../reflistlang?q=", SUBSTR(STR(?value), 37),"&qLabel=",STR(?valueLabel))  AS ?value_Url)
+    OPTIONAL {
+      ?value_statement prov:wasDerivedFrom / pr:P927 ?sourceUrl .
+      BIND("↗" AS ?source)
+    }
+}
+ `
+
+ $(document).ready(function() {
+     sparqlToDataTable(lexemesSparql, "#lexemes", {
+	 'linkPrefixes': {
+		'character': '../c'
+	 },
+	 pBar:"progressbar",
+	 pBarLabel:"progress-label",
+	 linkParams: {
+		form: '&qb='+q+'&qbLabel='+qLabel
+	 }
+	 });
+     sparqlToDataTable(attestedSparql, "#attestedin",
+		       options={paging: true, sDom: 'rt',
+			   linkPrefixes: {
+			       sense: '../ls'
+			   }});
+
+</script>
+
+<div class="language-entries">
+  <h1>Individual: ${ qLabel } (${ q })</h1>
+
+  <a title="Back"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="../script_index/index.html">←</a>
+  <a title="View and edit item in FactGrid"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="https://databae.factgrid.de/entity/${ q }">FactGrid ↗</a>
+
+
+  <h2>Individual Data</h2>
+
+  <table class="table table-hover" id="data"></table>
+
+ 
+    <h2>Mentioned in</h2>
+
+    <table class="table table-hover" id="attestedin"></table>
+  
+
+</div>
+
+
+
+
