@@ -86,6 +86,7 @@ WHERE {
     ?individual wdt:P203 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUrl), 37),"&qLabel=",STR(?value))  AS ?value_Url)
   }
 } 
 ORDER BY ?order
