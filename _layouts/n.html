@@ -107,7 +107,7 @@ attestedSparql = `
 
 invidiualsSparql = `
 SELECT
-  ?ind ?indLabel ?description
+  ?ind ?indLabel ?gender ?description
 WHERE {
   ?ind wdt:P248 wd:${ q } .
   ?ind wdt:P2 wd:Q7 .
@@ -115,6 +115,11 @@ WHERE {
   FILTER(lang(?indLabel)="en")
   ?ind skos:definition ?description .
   FILTER(lang(?description)="en")
+  ?ind wdt:P154 ?gender .
+  OPTIONAL {
+	?ind skos:definition ?gender .
+	FILTER(lang(?gender)="en")
+  }
 }
 `
 
