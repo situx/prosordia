@@ -10,7 +10,7 @@ SELECT DISTINCT
   (?valueLabel AS ?value_) ?value_Url
   ?source ?sourceUrl
 WHERE {
-  VALUES ?name { wd:${ l } }
+  VALUES ?name { wd:${ q } }
   {
     BIND(1 AS ?order)
     BIND("Lemma" AS ?description)
