@@ -10,7 +10,8 @@ SELECT
   ?language ?languageLabel ?languageDescription
 WITH {
   SELECT ?language (COUNT(*) AS ?number_of_lexemes) WHERE {
-    [] wdt:P18 ?language .
+    ?name wdt:P18 ?language .
+	?name wdt:P2 wd:Q31776 .
   }
   GROUP BY ?language
 } AS %languages
