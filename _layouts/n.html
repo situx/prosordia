@@ -117,11 +117,11 @@ WHERE {
       ?lexeme
       (GROUP_CONCAT(?compoundLabel; separator=" // ") AS ?other_compounds)
     WHERE {
-      ?lexeme wdt:P5238+ wd:${ l } .
+      ?lexeme wdt:P5238+ wd:${ q } .
       OPTIONAL {
         ?lexeme wdt:P5238 ?compound .
         ?compound wikibase:lemma ?compoundLabel .
-        FILTER (?compound != wd:${ l })
+        FILTER (?compound != wd:${ q })
       }
     }
     GROUP BY ?lexeme
