@@ -83,10 +83,10 @@ WHERE {
   {
     BIND(10 AS ?order)
     BIND("Siblings" AS ?description)
-    ?individual wdt:P203 ?valueUrl .
+    ?individual wdt:P203 ?valueUr .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
-	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUrl), 37),"&qLabel=",STR(?value))  AS ?value_Url)
+	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }
 } 
 ORDER BY ?order
