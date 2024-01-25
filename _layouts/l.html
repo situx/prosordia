@@ -22,7 +22,7 @@ WHERE {
   {
     BIND(2 AS ?order)
     BIND("Language" AS ?description)
-    ?lexeme wdt:P18 ?value .
+    ?name wdt:P18 ?value .
     ?value rdfs:label ?valueLabel .
     FILTER (LANG(?valueLabel) = 'en')
     BIND(CONCAT("../language?q=", SUBSTR(STR(?value), 32),"&qLabel=",?valueLabel)  AS ?value_Url)
@@ -40,7 +40,7 @@ WHERE {
   {
     BIND(4 AS ?order)
     BIND("Instance of" AS ?description)
-    ?lexeme p:P2 ?value_statement .
+    ?name p:P2 ?value_statement .
     ?value_statement ps:P2 ?value .
     ?value rdfs:label ?valueLabel .
     FILTER (LANG(?valueLabel) = 'en')
@@ -56,7 +56,7 @@ WHERE {
   {
     BIND(20 AS ?order)
     BIND("Described in" AS ?description)
-    ?lexeme ontolex:lexicalForm? / p:P1343 ?value_statement .
+    ?name p:P1343 ?value_statement .
     ?value_statement ps:P143 ?value .
     ?value rdfs:label ?valueLab .
 	OPTIONAL { ?value_statement pq:P478 ?refvol. }
