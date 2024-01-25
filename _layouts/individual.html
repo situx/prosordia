@@ -67,17 +67,19 @@ WHERE {
   {
     BIND(8 AS ?order)
     BIND("Father" AS ?description)
-    ?individual wdt:P141 ?valueUrl .
-    ?valueUrl rdfs:label ?value .
+    ?individual wdt:P141 ?valueUr .
+    ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   } 
   UNION
   {
     BIND(9 AS ?order)
     BIND("Mother" AS ?description)
-    ?individual wdt:P141 ?valueUrl .
-    ?valueUrl rdfs:label ?value .
+    ?individual wdt:P141 ?valueUr .
+    ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   } 
     UNION
   {
