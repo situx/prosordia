@@ -113,7 +113,7 @@ WHERE {
   ?individual wdt:P2 wd:Q7 .
   ?individual rdfs:label ?indLabell .
   FILTER(lang(?individualLabell)="en")
-  BIND(CONCAT(?individualLabel," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
+  BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
   ?individual schema:description ?description .
   FILTER(lang(?description)="en")
   ?individual wdt:P154 ?gender .
