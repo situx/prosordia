@@ -11,7 +11,7 @@ WHERE {
   {
     BIND(1 AS ?order)
     BIND("Name" AS ?description)
-    ?language rdfs:label ?value_string .
+    ?individual rdfs:label ?value_string .
     FILTER (LANG(?value_string) = 'en')
     BIND(COALESCE(?value_string, ?q) AS ?value)
   }
@@ -27,7 +27,7 @@ WHERE {
   {
     BIND(3 AS ?order)
     BIND("Gender" AS ?description)
-    ?language wdt:P154 ?valueUrl .
+    ?individual wdt:P154 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }  
@@ -35,7 +35,7 @@ WHERE {
   {
     BIND(4 AS ?order)
     BIND("Career" AS ?description)
-    ?language wdt:P165 ?valueUrl .
+    ?individual wdt:P165 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }  
@@ -43,7 +43,7 @@ WHERE {
   {
     BIND(5 AS ?order)
     BIND("Date of birth" AS ?description)
-    ?language wdt:P77 ?valueUrl .
+    ?individual wdt:P77 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }  
@@ -51,7 +51,7 @@ WHERE {
   {
     BIND(6 AS ?order)
     BIND("Place of birth" AS ?description)
-    ?language wdt:P82 ?valueUrl .
+    ?individual wdt:P82 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }
@@ -59,7 +59,7 @@ WHERE {
   {
     BIND(7 AS ?order)
     BIND("Place of address" AS ?description)
-    ?language wdt:P83 ?valueUrl .
+    ?individual wdt:P83 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }  
@@ -67,7 +67,7 @@ WHERE {
   {
     BIND(8 AS ?order)
     BIND("Father" AS ?description)
-    ?language wdt:P141 ?valueUrl .
+    ?individual wdt:P141 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   } 
@@ -75,7 +75,7 @@ WHERE {
   {
     BIND(9 AS ?order)
     BIND("Mother" AS ?description)
-    ?language wdt:P141 ?valueUrl .
+    ?individual wdt:P141 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   } 
@@ -83,23 +83,9 @@ WHERE {
   {
     BIND(10 AS ?order)
     BIND("Siblings" AS ?description)
-    ?language wdt:P203 ?valueUrl .
+    ?individual wdt:P203 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
-  }
-  UNION
-  {
-    SELECT
-      (2 AS ?order)
-      ("Number of characters" AS ?description)
-      (COUNT(?chars) AS ?value)
-    {
-      wd:Q401 wdt:P31 wd:Q8192 .
-	  ?chars wdt:P282 wd:Q401 .
-	  FILTER NOT EXISTS {?chars wdt:P31 wd:Q118867680 . }[] dct:language wd:Q401 .
-      BIND(1 AS ?dummy)
-    }
-    GROUP BY ?dummy
   }
 } 
 ORDER BY ?order
