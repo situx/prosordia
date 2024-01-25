@@ -52,10 +52,16 @@ WHERE {
       BIND(CONCAT("../reference?q=", SUBSTR(STR(?source_), 32))  AS ?sourceUrl)
     }
   }
-  UNION 
-  {
-    BIND(20 AS ?order)
-    BIND("Described in" AS ?description)
+}
+ORDER BY ?order
+`
+
+
+attestedSparql = `
+ SELECT DISTINCT
+  (?valueLabel AS ?value_) ?value_Url
+  ?source ?sourceUrl
+  WHERE {
     ?name p:P143 ?value_statement .
     ?value_statement ps:P143 ?value .
     ?value rdfs:label ?valueLab .
@@ -75,32 +81,7 @@ WHERE {
       ?value_statement prov:wasDerivedFrom / pr:P927 ?sourceUrl .
       BIND("↗" AS ?source)
     }
-  }
 }
-ORDER BY ?order
-`
-
-
- formsSparql = `
- # List of forms for a specific lexeme
- SELECT
-  ?form ?formLabel
-   (GROUP_CONCAT(DISTINCT ?featureLabel; separator=" // ") AS ?features)
-   # (GROUP_CONCAT(DISTINCT ?hyphenation; separator=" // ") AS ?hyphenations)
- WHERE {
-   wd:${ l } ontolex:lexicalForm ?form .
-   ?form ontolex:representation ?formLabel .
-   OPTIONAL {
-     ?form wikibase:grammaticalFeature ?feature .
-     ?feature rdfs:label ?featureLabel .
-     FILTER (LANG(?featureLabel) = "en")
-   }
-   OPTIONAL {
-    ?form wdt:P5279 ?hyphenation
-   }
- }
- GROUP BY ?form ?formLabel
- ORDER BY (STR(?form))
  `
 
  sensesSparql = `
@@ -164,12 +145,7 @@ WHERE {
 			   paging: false,
 			   sDom: 'rt',
 		       });
-     sparqlToDataTable(formsSparql, "#forms",
-		       options={paging: false, sDom: 'rt',
-			   linkPrefixes: {
-			       form: '../lf'
-			   }});
-     sparqlToDataTable(sensesSparql, "#senses",
+     sparqlToDataTable(attestedSparql, "#attestedin",
 		       options={paging: false, sDom: 'rt',
 			   linkPrefixes: {
 			       sense: '../ls'
@@ -190,15 +166,19 @@ WHERE {
 	    role="button"
 	    class="btn btn-outline-dark btn-sm"
 	    href="../language?q=${ qb }&qLabel=${ qbLabel }">←</a>
-	 <a title="View and edit lexeme in Wikidata"
+	 <a title="View and edit item in FactGrid"
 	    role="button"
 	    class="btn btn-outline-dark btn-sm"
-	    href="https://www.wikidata.org/wiki/Lexeme:${ l }">Factgrid ↗</a>
+	    href="https://database.factgrid.de/entity/${ l }">FactGrid ↗</a>
      </p>
      
      <table class="table table-hover" id="lexeme"></table>
 
     <hr/>
+
+    <h2>Attested in</h2>
+
+    <table class="table table-hover" id="attestedin"></table>
     
     <h2>Compounds</h2>
 
