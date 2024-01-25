@@ -64,94 +64,25 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?lexeme (GROUP_CONCAT(DISTINCT ?lexemeLab; SEPARATOR = " // ") AS ?lexemeLabel) (GROUP_CONCAT(DISTINCT ?sensse; SEPARATOR = " // ") AS ?senses) (GROUP_CONCAT(DISTINCT ?senseLabell; SEPARATOR = " // ") AS ?sensesLabel) ?lexical_category ?lexical_categoryLabel WHERE {
-  ?lexeme rdf:type ontolex:LexicalEntry;
-    dct:language wd:${ q };
-    wikibase:lemma ?lexemeLab ;
-	wikibase:lexicalCategory ?lexical_category.
-  ?lexical_category rdfs:label ?lexical_categoryLabel.
-  FILTER(LANG(?lexical_categoryLabel) = "en")
+SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel ?ref ?refLabel WHERE {
+  BIND(wd:Q471146 AS ?language)
+  ?name wdt:P18 ?language .
+  ?name wdt:P2 wd:Q31776 .
+  ?name rdfs:label ?nameLabel .
+  ?language rdfs:label ?languageLabel .
+  FILTER(lang(?nameLabel)="en")
+  FILTER(lang(?languageLabel)="en")
   OPTIONAL {
-    ?lexeme ontolex:sense ?senseitem.
-    ?senseitem skos:definition ?gloss.
-    OPTIONAL {
-      ?senseitem wdt:P5137|wdt:P9970 ?sensee.
-      ?sensee rdfs:label ?senseLab.
-      FILTER(LANG(?senseLab) = "en")
-    }
-    FILTER(LANG(?gloss) = "en")
-    BIND(COALESCE(?sensee, "") AS ?sensse)
-    BIND(CONCAT(?gloss, COALESCE(CONCAT(" [", ?senseLab, " (", REPLACE(STR(?sensee), "http://www.wikidata.org/entity/", ""), ")", "]"),"")) AS ?senseLabell)
+    ?name wdt:P625 ?gender .
+    ?gender rdfs:label ?genderLabel .
+    FILTER(lang(?genderLabel)="en")
+  }
+  OPTIONAL {
+    ?name wdt:P143 ?ref .
+        ?ref rdfs:label ?refLabel .
+    FILTER(lang(?refLabel)="en")
   }
 }
-GROUP BY ?lexeme ?lexical_category ?lexical_categoryLabel
-LIMIT 10000
-`
-  lexicalCategoriesSparql = `
-# tool: ordia
-# title: Statistics for word class for a specific language
-  SELECT
-    (COUNT(*) AS ?count)
-    ?lexical_category
-    ?lexical_categoryLabel
-    ?zoom ?zoomUrl
-    ?lexical_categoryDescription
-  WHERE{
-    [] a ontolex:LexicalEntry ;
-       dct:language wd:Q36790 ; 
-       wikibase:lexicalCategory ?lexical_category .
-    ?lexical_category rdfs:label ?lexical_categoryLabel .
-    ?lexical_category schema:description ?lexical_categoryDescription .
-    FILTER(LANG(?lexical_categoryLabel)="en")
-    FILTER(LANG(?lexical_categoryDescription)="en")
-    BIND("→" AS ?zoom)
-    BIND(CONCAT("../lexical-category?q=", SUBSTR(STR(?lexical_category), 32) ,"&qLabel=",?lexical_categoryLabel,"&l=Q36790&lLabel=Sumerian") AS ?zoomUrl)
-  }
-GROUP BY ?lexical_category ?lexical_categoryLabel    ?zoom ?zoomUrl ?lexical_categoryDescription
-ORDER BY DESC(?count)
-`
-
-lexemestimeperiodsSparql=`
-# tool: ordia
-# title: Time periods per lexeme
-  SELECT DISTINCT ?timeperiod (GROUP_CONCAT(DISTINCT ?timeperiodLab; separator=" // ") AS ?timeperiodLabel) (COUNT(?lexeme) as ?number_of_lexemes) WHERE {
-	?lexeme a ontolex:LexicalEntry ;
-		dct:language wd:${ q } .
-	?lexeme wdt:P2348 ?timeperiod .
-	?timeperiod rdfs:label ?timeperiodLab .
-	FILTER (LANG(?timeperiodLab) = "en")
-  }
-  GROUP BY ?timeperiod
-  ORDER BY DESC(?number_of_lexemes)
-  LIMIT 10000
-`
-
- longestWordsAndPhrasesSparql = `
-# tool: ordia
-# title: List of longest words for a language
-# https://lists.wikimedia.org/pipermail/wikidata/2018-October/012545.html
-SELECT DISTINCT ?length ?form ?formLabel ?lexeme ?lexemeLabel WHERE {
-  ?lexeme a ontolex:LexicalEntry ;
-          dct:language wd:${ q } ;
-          wikibase:lemma ?lexemeLabel .
-  ?lexeme ontolex:lexicalForm ?form .
-  ?form ontolex:representation ?formLabel
-  BIND(STRLEN(?formLabel) AS ?length)  
-} 
-ORDER BY DESC(?length) 
-LIMIT 200
-  `
-
-refsSPARQL=`
-SELECT DISTINCT ?reference ?referenceLabel (COUNT(?lexeme) AS ?number_of_lexemes) WHERE {
-  ?lexeme rdf:type ontolex:LexicalEntry;
-    dct:language wd:${ q } ;    
-    wdt:P1343 ?reference.
-  ?reference rdfs:label ?referenceLabel .
-  FILTER(lang(?referenceLabel)="en")
-}
-GROUP BY ?reference ?referenceLabel
-ORDER BY ?referenceLabel
 `
 
  $(document).ready(function() {
@@ -167,27 +98,6 @@ ORDER BY ?referenceLabel
 		'lexeme': '&qb='+q+'&qbLabel='+qLabel
 	  }
 	  });
-     sparqlToDataTable(lexicalCategoriesSparql, "#lexical-categories", {
-	 'linkPrefixes': {
-	     'lexical_category': '../lexical-category',
-	 }});
-	sparqlToDataTable(lexemestimeperiodsSparql, "#lexemestimeperiods", {
-	 'linkPrefixes': {
-	     'timeperiod': '../timeperiod',
-	 },linkParams: {
-		timeperiod: '&l='+q+'&lLabel='+qLabel
-	 }});
-	 sparqlToDataTable(refsSPARQL, "#lexemesreference", {
-		'linkPrefixes': {
-	     'reference': '../reflistlang',
-	 },linkParams: {
-		reference: '&l='+q+'&lLabel='+qLabel
-	 }});
-     sparqlToDataTable(longestWordsAndPhrasesSparql,
-		       "#longest-words-and-phrases", {
-			   'linkPrefixes': {
-			       'form': '../lf',
-			       'lexeme': '../l'}});
  });
 
 </script>
@@ -200,66 +110,22 @@ ORDER BY ?referenceLabel
      role="button"
      class="btn btn-outline-dark btn-sm"
      href="../language_index/index.html">←</a>
-  <a title="View and edit item in Wikidata"
+  <a title="View and edit item in Factgrid"
      role="button"
      class="btn btn-outline-dark btn-sm"
-     href="https://www.wikidata.org/wiki/${ q }">Wikidata ↗</a>
-  <a title="View item in Reasonator"
-     role="button"
-     class="btn btn-outline-dark btn-sm"
-     href="https://reasonator.toolforge.org/?&q=${ q }">Reasonator ↗</a>
-  <a title="View item as a Scholia topic"
-     role="button"
-     class="btn btn-outline-dark btn-sm"
-     href="https://scholia.toolforge.org/topic/${ q }">Scholia ↗</a>
-
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../lcombs?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Combinations</a> 
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../lderivs?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Derivations</a> 
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../ldevs?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Deviations</a> 
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../lradicals?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Radicals</a> 
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../ltrans?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Translations</a> 
-	<a role="button" class="btn btn-outline-dark btn-sm" href="../limggrid?q=${ q }&qLabel=${ qLabel }&qb=${ q }">Lexeme Image Grid</a>
+     href="https://database.factgrid.de/wiki/${ q }">Factgrid ↗</a>
 
   <h2>Data</h2>
 
   <table class="table table-hover" id="data"></table>
 
-  <h2>Lexemes</h2>
+  <h2>Names</h2>
   <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="lexemes"></table>
 
 
-
-
 </div>
 
-
-<h2>Lexical categories</h2>
-
-  <div class="embed-responsive embed-responsive-4by3">
-    <iframe loading="lazy" class="embed-responsive-item" src="https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0A%23%20Count%20of%20lexemes%20wrt.%20lexical%20category%20for%20a%20language%0ASELECT%0A%20%20%3Fcount%0A%20%20%3Flexical_category%20%3Flexical_categoryLabel%0AWITH%20%7B%0A%20%20SELECT%0A%20%20%20%20%28COUNT%28%3Flexeme%29%20AS%20%3Fcount%29%0A%20%20%20%20%3Flexical_category%20%0A%20%20%20WHERE%20%7B%0A%20%20%20%20%3Flexeme%20a%20ontolex%3ALexicalEntry%20%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20dct%3Alanguage%20wd%3A${ q }%20%3B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20wikibase%3Alemma%20%3FlexemeLabel%20.%0A%20%20%20%20%3Flexeme%20wikibase%3AlexicalCategory%20%3Flexical_category%20.%0A%20%20%7D%0A%20%20GROUP%20BY%20%3Flexical_category%0A%7D%20AS%20%25results%0AWHERE%20%7B%0A%20%20INCLUDE%20%25results%0A%20%20OPTIONAL%20%7B%20%20%20%20%20%20%20%20%0A%20%20%20%20%3Flexical_category%20rdfs%3Alabel%20%3Flexical_categoryLabel%20.%0A%20%20%20%20FILTER%20%28LANG%28%3Flexical_categoryLabel%29%20%3D%20%22en%22%29%0A%20%20%7D%0A%7D%0AORDER%20BY%20DESC%28%3Fcount%29%20%20"></iframe>
-  </div>
-
-  <table class="table table-hover" id="lexical-categories"></table>
-
-<h2>Lexemes by time period</h2>
-
-<table class="table table-hover" id="lexemestimeperiods"></table>  
-
-<h2>Lexemes by reference</h2>
-
-<table class="table table-hover" id="lexemesreference"></table>  
-  
-<h2>Longest words and phrases</h2>
-
-<table class="table table-hover" id="longest-words-and-phrases"></table>
-
-
-<h2>Demonym map</h2>
-
-  <div class="embed-responsive embed-responsive-4by3">
-    <iframe loading="lazy" class="embed-responsive-item" src="https://query.wikidata.org/embed.html#%23defaultView%3AMap%0ASELECT%20%3Flexeme%20%3Flemma%20%3Flocation%20%3Fgeo%20%7B%0A%20%20%3Flexeme%20dct%3Alanguage%20wd%3A${ q }%20%3B%0A%20%20%20%20%20%20%20%20%20%20wikibase%3Alemma%20%3Flemma%20%3B%0A%20%20%20%20%20%20%20%20%20%20ontolex%3Asense%20%2F%20wdt%3AP6271%20%3Flocation%20.%0A%20%20%3Flocation%20wdt%3AP625%20%3Fgeo%20.%0A%7D"></iframe>
-  </div>
 
 
 
