@@ -111,8 +111,9 @@ SELECT
 WHERE {
   ?ind wdt:P248 wd:Q512534 .
   ?ind wdt:P2 wd:Q7 .
-  ?ind rdfs:label ?indLabel .
-  FILTER(lang(?indLabel)="en")
+  ?ind rdfs:label ?indLabell .
+  FILTER(lang(?indLabell)="en")
+  BIND(CONCAT(?indLabel," (",SUBSTR(STR(?ind), 37),")") AS ?indLabel)
   ?ind schema:description ?description .
   FILTER(lang(?description)="en")
   ?ind wdt:P154 ?gender .
