@@ -35,36 +35,11 @@ SELECT ?individual ?individualLabel ?name ?nameLabel ?surname ?surnameLabel ?gen
   }
 }
 `
-
-  numberOfStatementsSparql = `
-SELECT
-  ?total_number_of_statements
-  ?average_number_of_statements
-  ?script ?scriptLabel ?scriptDescription
-WHERE {
-  {
-    SELECT
-      ?script
-      (SUM(?statements) AS ?total_number_of_statements)
-      (AVG(?statements) AS ?average_number_of_statements)
-    {
-      [] wikibase:statements ?statements ;
-         wdt:P282 ?script .
-    }
-    GROUP BY ?script
-  }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}
-ORDER BY DESC(?total_number_of_statements)
-`;
-
-  
+ 
 
  $(document).ready(function() {
      sparqlToDataTable(languagesSparql, "#languages",
 		        {'linkPrefixes': {'script': '../script'}});
-     sparqlToDataTable(numberOfStatementsSparql, "#number-of-statements",
-		      {'linkPrefixes': {'script': '../script'}});
  });
 
 </script>
@@ -73,14 +48,7 @@ ORDER BY DESC(?total_number_of_statements)
   <h1>Individuals</h1>
 
   <table class="table table-hover" id="languages"></table>
-
-  <hr>
-  
-  <h2 title="Number of statements">Number of statements</h2>
-
-  <table class="table table-hover" id="number-of-statements"></table>
  
-  
   
 </div>
 
