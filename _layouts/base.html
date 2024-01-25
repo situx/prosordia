@@ -1,0 +1,78 @@
+---
+title: PaleOrdia
+---
+
+<!DOCTYPE html>
+<html>
+	{% include head.html %}
+  <body>
+    {% include nav.html %}
+	<script>
+	const urlParams = new URLSearchParams(window.location.search);
+	const l = urlParams.get('l');
+	const f = urlParams.get('f');
+	const c = urlParams.get('c');
+	const s = urlParams.get('s');
+	const p = urlParams.get('p');
+	const q = urlParams.get('q');
+	const qLabel = urlParams.get('qLabel');
+	const qbLabel = urlParams.get('qbLabel');
+	const sLabel = urlParams.get('sLabel');
+	const lLabel = urlParams.get('lLabel');
+	const qb = urlParams.get('qb');
+	tp = urlParams.get('tp');
+	const q1 = urlParams.get('q1');
+	const q2 = urlParams.get('q2');
+	const lang = urlParams.get('language');
+	const representation = urlParams.get('representation');
+	if(typeof(qLabel)==='undefined'){
+		qLabel=""
+	}
+	if(typeof(qbLabel)==='undefined'){
+		qbLabel=""
+	}
+	</script>
+	<div class="container">
+    {{content}}
+	</div>
+	{% include footer.html %}
+  </body>
+	<script>
+	if(typeof(q)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ q }', q);
+	}
+	if(typeof(l)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ l }', l);
+	}
+	if(typeof(lLabel)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ lLabel }', lLabel);
+	}
+	if(typeof(s)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ s }', s);
+	}
+	if(typeof(qb)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ qb }', qb);
+	}
+	if(typeof(qbLabel)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ qbLabel }', qbLabel);
+	}
+	if(typeof(qLabel)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ qLabel }', qLabel);
+	}
+	if(typeof(p)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ p }', p);
+	}
+	if(typeof(c)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ c }', c);
+	}
+	if(typeof(tp)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ tp }', tp);
+	}
+	if(typeof(f)!=='undefined'){
+		document.body.innerHTML = document.body.innerHTML.replaceAll('${ f }', f);
+	}
+	</script>
+</html>
+
+
+

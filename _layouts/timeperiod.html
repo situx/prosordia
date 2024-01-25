@@ -1,0 +1,38 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+ lexemesSparql = `
+# tool: ordia
+# title: List of characters for a script
+  SELECT DISTINCT ?lexeme (GROUP_CONCAT(DISTINCT ?lexemeLab; separator=" // ") AS ?lexemeLabel) WHERE {
+	?lexeme a ontolex:LexicalEntry ;
+		dct:language wd:${ l } ; 
+		wikibase:lemma ?lexemeLab .
+	?lexeme wdt:P2348 wd:${ q } .
+  }
+  GROUP BY ?lexeme
+  LIMIT 10000
+`
+
+ $(document).ready(function() {
+     sparqlToDataTable(lexemesSparql, "#lexical-categories", {
+	 linkPrefixes: {
+	     lexeme: '../l'
+	 }
+     });
+ });
+
+</script>
+
+<h1>Lexemes for ${ qLabel } (${ q })</h1>
+
+<hr/>
+
+<div class="lexical-categories">
+
+    <table class="table table-hover" id="lexical-categories"></table>
+
+</div>
+
