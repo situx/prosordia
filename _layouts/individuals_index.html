@@ -19,11 +19,13 @@ SELECT ?individual ?individualLabel ?name ?nameLabel ?gender ?genderLabel ?caree
 	FILTER(lang(?nameLabel)="en")
   }
   OPTIONAL {
+	?individual wdt:P154 ?gender .
 	?gender rdfs:label ?genderLabel .	
 	FILTER(lang(?genderLabel)="en")
   }
   OPTIONAL {
-	?career wdt:P165 ?careerLabel .	
+	?individual wdt:P165 ?career .
+	?career rdfs:label ?careerLabel .	
 	FILTER(lang(?careerLabel)="en")
   }
 }
