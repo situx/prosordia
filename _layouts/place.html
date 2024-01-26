@@ -13,7 +13,44 @@ WHERE
 }
 `
 
+placeSparql = `
+SELECT ?description ?value ?valueUrl
+WHERE {
+  BIND(wd:${ q } AS ?place)
+  {
+    BIND(1 AS ?order)
+    BIND("Name" AS ?description)
+    ?place rdfs:label ?value_string .
+    FILTER (LANG(?value_string) = 'en')
+    BIND(COALESCE(?value_string, ?q) AS ?value)
+  }UNION
+  {
+    BIND(2 AS ?order)
+    BIND("Description" AS ?description)
+    ?individual schema ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+  UNION
+  {
+    BIND(3 AS ?order)
+    BIND("Instance of" AS ?description)
+    ?individual wdt:P2 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }UNION
+  {
+    BIND(4 AS ?order)
+    BIND("Coordinate Location" AS ?description)
+    ?individual wdt:P48 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+}
+`
+
  $(document).ready(function() {
+	 sparqlToDataTable(placeSparql, "#place", {'linkPrefixes': {'individual': '../individual'}});
 	 sparqlToDataTable(dataSparql, "#data", {'linkPrefixes': {'individual': '../individual'}});
  });
 
@@ -30,6 +67,10 @@ WHERE
      role="button"
      class="btn btn-outline-dark btn-sm"
      href="https://database.factgrid.de/entity/${ q }">FactGrid ↗</a>
+
+  <h2>Place</h2>
+
+  <table class="table table-hover" id="place"></table>
 
   <h2>Individuals</h2>
 
