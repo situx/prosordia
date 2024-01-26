@@ -50,8 +50,8 @@ WHERE {
   {
     BIND(6 AS ?order)
     BIND("Career" AS ?description)
-    ?individual wdt:P165 ?valueUrl .
-    ?valueUrl rdfs:label ?value .
+    ?individual wdt:P165 ?valueUr .
+    ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
 	BIND(CONCAT("../career?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }  
