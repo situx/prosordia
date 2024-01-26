@@ -27,7 +27,7 @@ WHERE {
   {
     BIND(2 AS ?order)
     BIND("Description" AS ?description)
-    ?individual schema:description ?valueUrl .
+    ?place schema:description ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }
@@ -35,14 +35,14 @@ WHERE {
   {
     BIND(3 AS ?order)
     BIND("Instance of" AS ?description)
-    ?individual wdt:P2 ?valueUrl .
+    ?place wdt:P2 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }UNION
   {
     BIND(4 AS ?order)
     BIND("Coordinate Location" AS ?description)
-    ?individual wdt:P48 ?valueUrl .
+    ?place wdt:P48 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }
