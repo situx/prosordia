@@ -67,9 +67,10 @@ WHERE {
   {
     BIND(8 AS ?order)
     BIND("Place of birth" AS ?description)
-    ?individual wdt:P82 ?valueUrl .
-    ?valueUrl rdfs:label ?value .
+    ?individual wdt:P82 ?valueUr .
+    ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../place?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }
   UNION
   {
