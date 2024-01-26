@@ -77,6 +77,7 @@ WHERE {
     ?individual wdt:P83 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../place?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }  
   UNION
   {
