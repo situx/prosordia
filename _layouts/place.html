@@ -48,6 +48,7 @@ WHERE {
     BIND(5 AS ?order)
     BIND("Pleiades ID" AS ?description)
     ?place wdt:P671 ?value .
+	BIND(CONCAT("https://pleiades.stoa.org/places/",?value) AS ?valueUrl)
   }
 }order by ?order
 `
