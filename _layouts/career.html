@@ -1,0 +1,81 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+dataSparql = `
+SELECT ?individual ?individualLabel ?individualDescription
+WHERE 
+{
+  ?individual wdt:P2 wd:Q7 .
+  ?individual wdt:P165 wd:${ q }. 
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+`
+
+placeSparql = `
+SELECT ?description ?value ?valueUrl
+WHERE {
+  BIND(wd:${ q } AS ?place)
+  {
+    BIND(1 AS ?order)
+    BIND("Name" AS ?description)
+    ?place rdfs:label ?value_string .
+    FILTER (LANG(?value_string) = 'en')
+    BIND(COALESCE(?value_string, ?q) AS ?value)
+  }UNION
+  {
+    BIND(2 AS ?order)
+    BIND("Description" AS ?description)
+    ?place schema:description ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }
+  UNION
+  {
+    BIND(3 AS ?order)
+    BIND("Instance of" AS ?description)
+    ?place wdt:P2 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+  }UNION
+  {
+    BIND(4 AS ?order)
+    BIND("Economic sector" AS ?description)
+    ?place wdt:P626 ?value .
+  }
+}order by ?order
+`
+
+ $(document).ready(function() {
+	 sparqlToDataTable(placeSparql, "#place", {'linkPrefixes': {'individual': '../individual'}});
+	 sparqlToDataTable(dataSparql, "#data", {'linkPrefixes': {'individual': '../individual'}});
+ });
+
+</script>
+
+<div class="language-entries">
+  <h1>Individuals by career: ${ qLabel } (${ q })</h1>
+
+  <a title="Back"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="../script_index/index.html">←</a>
+  <a title="View and edit item in FactGrid"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="https://database.factgrid.de/entity/${ q }">FactGrid ↗</a>
+
+  <h2>Career</h2>
+
+  <table class="table table-hover" id="place"></table>
+
+  <h2>Individuals</h2>
+
+  <table class="table table-hover" id="data"></table>
+
+</div>
+
+
+
+

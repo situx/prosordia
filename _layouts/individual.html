@@ -53,6 +53,7 @@ WHERE {
     ?individual wdt:P165 ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../career?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }  
   UNION
   {
@@ -190,7 +191,7 @@ ORDER BY ?order
   <a title="View and edit item in FactGrid"
      role="button"
      class="btn btn-outline-dark btn-sm"
-     href="https://databae.factgrid.de/entity/${ q }">FactGrid ↗</a>
+     href="https://database.factgrid.de/entity/${ q }">FactGrid ↗</a>
 
 
   <h2>Individual Data</h2>
