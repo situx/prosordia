@@ -42,7 +42,9 @@ WHERE {
   {
     BIND(4 AS ?order)
     BIND("Economic sector" AS ?description)
-    ?place wdt:P626 ?value .
+	?place wdt:P626 ?valueUrl .
+    ?valueUrl rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
   }
 }order by ?order
 `
