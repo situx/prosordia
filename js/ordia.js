@@ -376,9 +376,9 @@ function sparqlToDataTable(sparql, element, options={}) {
 	});
 
 	$(element).append(
-	    '<caption><a href="https://database.factgrid.de/#' + 
+	    '<caption><a href="https://database.factgrid.de/query#' + 
 		encodeURIComponent(sparql) +	
-		'">Edit on query.Wikidata.org</a></caption>');
+		'">Edit on database.factgrid.de/query/</a></caption>');
     }, "json");
 
 }
