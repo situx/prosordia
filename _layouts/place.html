@@ -27,7 +27,7 @@ WHERE {
   {
     BIND(2 AS ?order)
     BIND("Description" AS ?description)
-    ?individual schema ?valueUrl .
+    ?individual schema:description ?valueUrl .
     ?valueUrl rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
   }
