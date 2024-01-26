@@ -74,8 +74,8 @@ WHERE {
   {
     BIND(9 AS ?order)
     BIND("Place of address" AS ?description)
-    ?individual wdt:P83 ?valueUrl .
-    ?valueUrl rdfs:label ?value .
+    ?individual wdt:P83 ?valueUr .
+    ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
 	BIND(CONCAT("../place?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }  
