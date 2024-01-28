@@ -51,12 +51,20 @@ WHERE {
       FILTER (LANG(?source) = 'en')
       BIND(CONCAT("../reference?q=", SUBSTR(STR(?source_), 37))  AS ?sourceUrl)
     }
+  }  UNION 
+  {
+    BIND(5 AS ?order)
+    BIND("Time Period" AS ?description)
+    ?name wdt:P853 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+    BIND(CONCAT("../timeperiod?q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
   }
 }
 ORDER BY ?order
 `
 
-
+https://database.factgrid.de/wiki/Property:P853
 attestedSparql = `
  SELECT DISTINCT
   (?valueLabel AS ?value_) ?value_Url
