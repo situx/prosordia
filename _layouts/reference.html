@@ -72,6 +72,13 @@ WHERE {
   }UNION 
   {
     BIND(7 AS ?order)
+    BIND("Part of" AS ?description)
+    ?name wdt:P8 ?value_Url .
+    ?value_Url rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+  }UNION 
+  {
+    BIND(8 AS ?order)
     BIND("CDLI ID" AS ?description)
     ?name wdt:P692 ?value .
     BIND(?value AS ?valueLabel)
