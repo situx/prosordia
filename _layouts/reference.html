@@ -68,8 +68,7 @@ WHERE {
     BIND(6 AS ?order)
     BIND("Online presence" AS ?description)
     ?name wdt:P156 ?value_Url .
-    ?value_Url rdfs:label ?valueLabel .
-    FILTER(lang(?valueLabel)="en")
+    BIND(?value_Url AS ?valueLabel)
   }
 }
 ORDER BY ?order
