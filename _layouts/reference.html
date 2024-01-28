@@ -69,6 +69,13 @@ WHERE {
     BIND("Online presence" AS ?description)
     ?name wdt:P156 ?value_Url .
     BIND(?value_Url AS ?valueLabel)
+  }UNION 
+  {
+    BIND(7 AS ?order)
+    BIND("CDLI ID" AS ?description)
+    ?name wdt:P692 ?value .
+    BIND(?value AS ?valueLabel)
+    BIND(CONCAT("https://cdli.ucla.edu/search/archival_view.php?ObjectID=",?value) AS ?value_Url)
   }
 }
 ORDER BY ?order
