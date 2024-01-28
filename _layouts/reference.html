@@ -3,23 +3,69 @@ layout: base
 ---
 
 <script type="text/javascript">
-    lexemesSparql = `
-SELECT 
-  DISTINCT ?lexeme ?lexemeLabel
+   lexemeSparql = `
+# Data for a specific lexeme
+SELECT DISTINCT
+  ?description
+  (?valueLabel AS ?value_) ?value_Url
+  ?source ?sourceUrl
 WHERE {
-  { ?lexeme wdt:P1343 | ^wdt:P6254 wd:${ q } . }
-  UNION
+  VALUES ?name { wd:${ q } }
   {
-    ?lexeme ?property ?statement . 
-    ?statement prov:wasDerivedFrom / pr:P248 wd:${ q } .
+    BIND(1 AS ?order)
+    BIND("Name" AS ?description)
+    ?name rdfs:label ?value .
+	FILTER(lang(?value)="en")
+    BIND(?value AS ?valueLabel)
   }
-  UNION
+  UNION 
   {
-    ?lexeme ontolex:lexicalForm? / wdt:P5323 wd:${ q } .
+    BIND(4 AS ?order)
+    BIND("Instance of" AS ?description)
+    ?name p:P2 ?value_statement .
+    ?value_statement ps:P2 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER (LANG(?valueLabel) = 'en')
+    BIND(CONCAT("../property_value?p=P31&q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
+    OPTIONAL {
+      ?value_statement prov:wasDerivedFrom / pr:P248 ?source_ .
+      ?source_ rdfs:label ?source .
+      FILTER (LANG(?source) = 'en')
+      BIND(CONCAT("../reference?q=", SUBSTR(STR(?source_), 37))  AS ?sourceUrl)
+    }
+  } UNION 
+  {
+    BIND(3 AS ?order)
+    BIND("Type of work" AS ?description)
+    ?name wdt:P121 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+  } UNION 
+  {
+    BIND(2 AS ?order)
+    BIND("Language" AS ?description)
+    ?name wdt:P18 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER (LANG(?valueLabel) = 'en')
+    BIND(CONCAT("../language?q=", SUBSTR(STR(?value), 37),"&qLabel=",?valueLabel)  AS ?value_Url)
   }
-    
-  ?lexeme wikibase:lemma ?lexemeLabel .
+  UNION 
+  {
+    BIND(3 AS ?order)
+    BIND("Writing material" AS ?description)
+    ?name wdt:P480 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+  }UNION 
+  {
+    BIND(3 AS ?order)
+    BIND("Online presence" AS ?description)
+    ?name wdt:P156 ?value .
+    ?value rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+  }
 }
+ORDER BY ?order
 `
 
 
@@ -51,6 +97,15 @@ WHERE {
 }
 `
 
+imagesSparql = `
+SELECT 
+  ?image
+WHERE {
+    ${ q } p:P188 ?imagee . 
+	BIND(CONCAT("<img src=\"",?imagee,"/>") AS ?image)
+}
+`
+
 
   $(document).ready(function() {
       sparqlToDataTable(lexemesSparql, "#lexemes",
@@ -58,7 +113,7 @@ WHERE {
 			    'linkPrefixes': {
 				'lexeme': '../l',
 			    }});
-      sparqlToDataTable(listOfUsesSparql, "#list-of-uses",
+      sparqlToDataTable(imageSPARQL, "#images",
 			options={
 			    'linkPrefixes': {
 				'lexeme': '../l',
@@ -89,22 +144,13 @@ WHERE {
     
   <hr>
 
-  <h2>Lexemes</h2>
+  <h2>Reference Data</h2>
 
   <table class="table table-hover" id="lexemes"></table>
 
-  
-  <h2>Use</h2>
-
-  <table class="table table-hover" id="list-of-uses"></table>
-
 <h2>Images</h2>
 
-  <div class="embed-responsive embed-responsive-4by3">
-    <iframe loading="lazy" class="embed-responsive-item" src="https://query.wikidata.org/embed.html#%23defaultView%3AImageGrid%0ASELECT%20%0A%20%20%3Fimage%0A%20%20%3Flexeme%20%3FlexemeLabel%0A%20%20%3Fuse%0AWHERE%20%7B%0A%20%20%3Flexeme%20p%3AP5831%20%3Fuse_statement%20.%20%0A%20%20%3Flexeme%20wikibase%3Alemma%20%3FlexemeLabel%20.%0A%20%20%3Fuse_statement%20ps%3AP5831%20%3Fuse%20.%0A%20%20%3Fuse_statement%20pq%3AP6072%20%2F%20wdt%3AP5137%3F%20%2F%20wdt%3AP18%20%3Fimage%20.%0A%20%20%3Fuse_statement%20prov%3AwasDerivedFrom%20%2F%20pr%3AP248%20wd%3A${ q }%20.%0A%7D"></iframe>
-  </div>
-
-<iframe style="width: 80vw; height: 50vh; border: none;" src="" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" ></iframe>
+  <table class="table table-hover" id="images"></table>
   
     
 </div>
