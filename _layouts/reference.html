@@ -118,10 +118,15 @@ WHERE {
 `
 
 nameSparql = `
-SELECT ?name ?nameLabel ?gender ?genderLabel WHERE {
+SELECT ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel WHERE {
     ?name wdt:P143 wd:${ q } .
 	?name rdfs:label ?nameLabel .
 	FILTER(lang(?nameLabel)="en")
+	OPTIONAL {
+		?name wdt:P18 ?language .
+		?language rdfs:label ?languageLabel .
+		FILTER(lang(?languageLabel)="en")
+	} 
 	OPTIONAL {
 		?name wdt:P625 ?gender .
 		?gender rdfs:label ?genderLabel .
