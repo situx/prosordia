@@ -131,6 +131,14 @@ WHERE {
     ?valueUr rdfs:label ?value .
     FILTER (LANG(?value) = 'en')
 	BIND(CONCAT("../individual?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
+  }UNION
+  {
+    BIND(16 AS ?order)
+    BIND("Contributing Research projects" AS ?description)
+    ?individual wdt:P131 ?valueUr .
+    ?valueUr rdfs:label ?value .
+    FILTER (LANG(?value) = 'en')
+	BIND(CONCAT("../ref?q=", SUBSTR(STR(?valueUr), 37),"&qLabel=",STR(?value))  AS ?valueUrl)
   }
 } 
 ORDER BY ?order
