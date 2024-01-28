@@ -108,8 +108,7 @@ imagesSparql = `
 SELECT 
   ?image
 WHERE {
-    wd:Q740110 wdt:P188 ?imagee . 
-	BIND(CONCAT("<img loading=\\\"lazy\\\" src=\\\"",STR(?imagee),"\\\" />") AS ?image)
+    wd:Q740110 wdt:P188 ?image .
 }
 `
 
