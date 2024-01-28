@@ -117,6 +117,20 @@ WHERE {
 }
 `
 
+nameSparql = `
+SELECT ?name ?nameLabel ?gender ?genderLabel WHERE {
+    ?name wdt:P143 wd:${ q } .
+	?name rdfs:label ?nameLabel .
+	FILTER(lang(?nameLabel)="en")
+	OPTIONAL {
+		?name wdt:P625 ?gender .
+		?gender rdfs:label ?genderLabel .
+		FILTER(lang(?genderLabel)="en")
+	} 
+}
+ORDER BY ?nameLabel
+`
+
 imagesSparql = `
 SELECT 
   ?image
@@ -138,6 +152,11 @@ WHERE {
 				'lexeme': '../l',
 				'form': '../lf', 
 			    }});
+	  sparqlToDataTable(nameSparql, "#name",
+		options={
+			'linkPrefixes': {
+			'name': '../n',
+		}});
   });
   
 </script>
@@ -163,10 +182,13 @@ WHERE {
 
   <table class="table table-hover" id="lexemes"></table>
 
-<h2>Images</h2>
+  <h2>Images</h2>
 
   <table class="table table-hover" id="images"></table>
-  
+ 
+  <h2>Names on medium</h2>
+
+  <table class="table table-hover" id="name"></table> 
     
 </div>
 
