@@ -102,7 +102,7 @@ SELECT
   ?image
 WHERE {
     ${ q } p:P188 ?imagee . 
-	BIND(CONCAT("<img src=\"",?imagee,"/>") AS ?image)
+	BIND(CONCAT("<img src=",?imagee,"/>") AS ?image)
 }
 `
 
