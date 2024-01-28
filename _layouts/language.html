@@ -86,7 +86,7 @@ SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel ?timeperio
     ?name wdt:P143 ?reff .
     ?reff rdfs:label ?refLabel .
     FILTER(lang(?refLabel)="en")
-    BIND(CONCAT("../reference?q=", SUBSTR(STR(?ref), 37),"&qLabel=",?refLabel)  AS ?ref)
+    BIND(CONCAT("../reference?q=", SUBSTR(STR(?reff), 37),"&qLabel=",?refLabel)  AS ?ref)
   }
 }GROUP BY ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel ?timeperiod ?timeperiodLabel
 ORDER BY ?nameLabel
