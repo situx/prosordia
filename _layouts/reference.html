@@ -3,7 +3,7 @@ layout: base
 ---
 
 <script type="text/javascript">
-   lexemeSparql = `
+   lexemesSparql = `
 # Data for a specific lexeme
 SELECT DISTINCT
   ?description
@@ -113,7 +113,7 @@ WHERE {
 			    'linkPrefixes': {
 				'lexeme': '../l',
 			    }});
-      sparqlToDataTable(imageSPARQL, "#images",
+      sparqlToDataTable(imagesSPARQL, "#images",
 			options={
 			    'linkPrefixes': {
 				'lexeme': '../l',
