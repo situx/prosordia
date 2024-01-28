@@ -64,7 +64,7 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
+SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel ?timeperiod ?timeperiodLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
   BIND(wd:${ q } AS ?language)
   ?name wdt:P18 ?language .
   ?name wdt:P2 wd:Q31776 .
@@ -76,13 +76,18 @@ SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel (GROUP_CON
     ?name wdt:P625 ?gender .
     ?gender rdfs:label ?genderLabel .
     FILTER(lang(?genderLabel)="en")
+  }  
+  OPTIONAL {
+    ?name wdt:P853 ?timeperiod .
+    ?timeperiod rdfs:label ?timeperiodLabel .
+    FILTER(lang(?timeperiodLabel)="en")
   }
   OPTIONAL {
     ?name wdt:P143 ?ref .
     ?ref rdfs:label ?refLabel .
     FILTER(lang(?refLabel)="en")
   }
-}GROUP BY ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel
+}GROUP BY ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel ?timeperiod ?timeperiodLabel
 ORDER BY ?nameLabel
 `
 
