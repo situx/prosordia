@@ -20,7 +20,7 @@ WHERE {
   }
   UNION 
   {
-    BIND(4 AS ?order)
+    BIND(2 AS ?order)
     BIND("Instance of" AS ?description)
     ?name p:P2 ?value_statement .
     ?value_statement ps:P2 ?value .
@@ -37,12 +37,12 @@ WHERE {
   {
     BIND(3 AS ?order)
     BIND("Type of work" AS ?description)
-    ?name wdt:P121 ?value .
-    ?value rdfs:label ?valueLabel .
+    ?name wdt:P121 ?value_Url .
+    ?value_Url rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
   } UNION 
   {
-    BIND(2 AS ?order)
+    BIND(4 AS ?order)
     BIND("Language" AS ?description)
     ?name wdt:P18 ?value .
     ?value rdfs:label ?valueLabel .
@@ -51,17 +51,17 @@ WHERE {
   }
   UNION 
   {
-    BIND(3 AS ?order)
+    BIND(5 AS ?order)
     BIND("Writing material" AS ?description)
-    ?name wdt:P480 ?value .
-    ?value rdfs:label ?valueLabel .
+    ?name wdt:P480 ?value_Url .
+    ?value_Url rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
   }UNION 
   {
-    BIND(3 AS ?order)
+    BIND(6 AS ?order)
     BIND("Online presence" AS ?description)
-    ?name wdt:P156 ?value .
-    ?value rdfs:label ?valueLabel .
+    ?name wdt:P156 ?value_Url .
+    ?value_Url rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
   }
 }
@@ -113,7 +113,7 @@ WHERE {
 			    'linkPrefixes': {
 				'lexeme': '../l',
 			    }});
-      sparqlToDataTable(imagesSPARQL, "#images",
+      sparqlToDataTable(imagesSparql, "#images",
 			options={
 			    'linkPrefixes': {
 				'lexeme': '../l',
