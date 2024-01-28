@@ -83,6 +83,7 @@ SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel (GROUP_CON
     FILTER(lang(?refLabel)="en")
   }
 }GROUP BY ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel
+ORDER BY ?nameLabel
 `
 
  $(document).ready(function() {
