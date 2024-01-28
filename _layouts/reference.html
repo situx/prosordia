@@ -17,6 +17,13 @@ WHERE {
     ?name rdfs:label ?value .
 	FILTER(lang(?value)="en")
     BIND(?value AS ?valueLabel)
+  } UNION 
+  {
+    BIND(1 AS ?order)
+    BIND("Alternative Name" AS ?description)
+    ?name skos:altLabel ?value .
+	FILTER(lang(?value)="en")
+    BIND(?value AS ?valueLabel)
   }
   UNION 
   {
