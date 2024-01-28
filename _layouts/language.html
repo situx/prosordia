@@ -65,7 +65,7 @@ ORDER BY ?order
 # tool: ordia
 # title: List of lexemes for a language
 SELECT ?name ?nameLabel ?language ?languageLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
-  BIND(${ q } AS ?language)
+  BIND(wd:${ q } AS ?language)
   ?name wdt:P18 ?language .
   ?name wdt:P2 wd:Q31776 .
   ?name rdfs:label ?nameLabel .
