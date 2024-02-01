@@ -66,19 +66,26 @@ WHERE {
   }UNION 
   {
     BIND(6 AS ?order)
+    BIND("Findspot" AS ?description)
+    ?name wdt:P695 ?value_Url .
+    ?value_Url rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
+  }UNION 
+  {
+    BIND(7 AS ?order)
     BIND("Online presence" AS ?description)
     ?name wdt:P156 ?value_Url .
     BIND(?value_Url AS ?valueLabel)
   }UNION 
   {
-    BIND(7 AS ?order)
+    BIND(8 AS ?order)
     BIND("Part of" AS ?description)
     ?name wdt:P8 ?value_Url .
     ?value_Url rdfs:label ?valueLabel .
     FILTER(lang(?valueLabel)="en")
   }UNION 
   {
-    BIND(8 AS ?order)
+    BIND(9 AS ?order)
     BIND("CDLI ID" AS ?description)
     ?name wdt:P692 ?value .
     BIND(?value AS ?valueLabel)
