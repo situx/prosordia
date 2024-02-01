@@ -70,15 +70,13 @@ attestedSparql = `
   (?valueLabel AS ?value_) ?value_Url
   ?source ?sourceUrl
   WHERE {
-    wd:${ q } p:P143 ?value_statement .
+    wd:Q740125 p:P143 ?value_statement .
     ?value_statement ps:P143 ?value .
     ?value rdfs:label ?valueLab .
-	OPTIONAL {?value_statement pq:P1029 ?refvol. }
-	OPTIONAL{?value_statement pq:P1029 ?valuenum .}
+	OPTIONAL {?value_statement pq:P1029 ?refvol. ?refvol rdfs:label ?refvolLabel . FILTER(lang(?refvolLabel)="en") }
 	OPTIONAL{?value_statement pq:P1030 ?refline .}
 	OPTIONAL{?value_statement pq:P54 ?refpage .}
-    BIND(COALESCE(CONCAT(?valuenum, " "), "") As ?thenum)
-    BIND(COALESCE(CONCAT("s. ", ?refvol, " "), "") AS ?thevol)
+    BIND(COALESCE(CONCAT("s. ", ?refvolLabel, " "), "") AS ?thevol)
     BIND(COALESCE(CONCAT("p. ",?refpage), "") As ?thepage)
     BIND(COALESCE(CONCAT(" l. ",?refline), "") As ?theline)
 	BIND(CONCAT(?thevol, ?thepage, ?theline) AS ?refnumber)
