@@ -15,6 +15,7 @@ SELECT ?timeperiod ?timeperiodLabel ?description (COUNT(?name) AS ?names) WHERE 
   FILTER(lang(?nameLabel)="en")
 }
 GROUP BY ?timeperiod ?timeperiodLabel ?description
+ORDER BY ?timeperiodLabel
 `
 
  $(document).ready(function() {
