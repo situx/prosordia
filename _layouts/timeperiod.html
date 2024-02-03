@@ -4,29 +4,36 @@ layout: base
 
 <script type="text/javascript">
  lexemesSparql = `
-# tool: ordia
-# title: List of characters for a script
-  SELECT DISTINCT ?lexeme (GROUP_CONCAT(DISTINCT ?lexemeLab; separator=" // ") AS ?lexemeLabel) WHERE {
-	?lexeme a ontolex:LexicalEntry ;
-		dct:language wd:${ l } ; 
-		wikibase:lemma ?lexemeLab .
-	?lexeme wdt:P2348 wd:${ q } .
+SELECT ?name ?nameLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
+  ?name wdt:P853 wd:${ q } .
+  ?name rdfs:label ?nameLabel .
+  FILTER(lang(?nameLabel)="en")
+  OPTIONAL {
+    ?name wdt:P625 ?gender .
+    ?gender rdfs:label ?genderLabel .
+    FILTER(lang(?genderLabel)="en")
+  }  
+  OPTIONAL {
+    ?name wdt:P143 ?ref .
+    ?ref rdfs:label ?refLabel .
+    FILTER(lang(?refLabel)="en")
   }
-  GROUP BY ?lexeme
-  LIMIT 10000
+}
+GROUP BY ?name ?nameLabel ?gender ?genderLabel
+ORDER BY ?nameLabel
 `
 
  $(document).ready(function() {
      sparqlToDataTable(lexemesSparql, "#lexical-categories", {
 	 linkPrefixes: {
-	     lexeme: '../l'
+	     name: '../n'
 	 }
      });
  });
 
 </script>
 
-<h1>Lexemes for ${ qLabel } (${ q })</h1>
+<h1>Names for time period ${ q } ${ qLabel }</h1>
 
 <hr/>
 
