@@ -11,6 +11,7 @@ SELECT ?timeperiod ?timeperiodLabel ?description (COUNT(?name) AS ?names) WHERE 
   ?timeperiod schema:description ?description .
   FILTER(lang(?description)="en")
   ?name wdt:P853 ?timeperiod .
+  ?name wdt:P2 wd:Q31776 .
   ?name rdfs:label ?nameLabel .
   FILTER(lang(?nameLabel)="en")
 }
