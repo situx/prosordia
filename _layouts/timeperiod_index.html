@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
  lexemesSparql = `
-SELECT ?timeperiod ?timeperiodLabel ?description ?coords (COUNT(?name) AS ?names) WHERE {
+SELECT ?timeperiod ?timeperiodLabel ?description (COUNT(?name) AS ?names) WHERE {
   ?timeperiod wdt:P2 wd:Q249725 .
   ?timeperiod rdfs:label ?timeperiodLabel .
   FILTER(lang(?timeperiodLabel)="en")
@@ -14,7 +14,7 @@ SELECT ?timeperiod ?timeperiodLabel ?description ?coords (COUNT(?name) AS ?names
   ?name rdfs:label ?nameLabel .
   FILTER(lang(?nameLabel)="en")
 }
-GROUP BY ?place ?placeLabel ?description ?coords
+GROUP BY ?timeperiod ?timeperiodLabel ?description
 `
 
  $(document).ready(function() {
