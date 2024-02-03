@@ -1,0 +1,47 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+# List of scripts with count of the number of characters
+SELECT ?place ?placeLabel ?description ?coords (COUNT(?name)AS ?names) WHERE {
+  ?place wdt:P2 wd:Q8 .
+  ?place rdfs:label ?placeLabel .
+  FILTER(lang(?placeLabel)="en")
+  ?individual schema:description ?description .
+  FILTER(lang(?description)="en")
+  OPTIONAL {
+	?name wdt:P83 ?place .
+	?name wdt:P2 wd:Q31776 .
+	?name rdfs:label ?nameLabel .
+	FILTER(lang(?nameLabel)="en")
+  }
+  OPTIONAL {
+	?place wdt:P48 ?coords .
+  }
+}
+`
+ 
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+		        {	 
+	 'pBar':"progressbar",
+	 'pBarLabel':"progress-label",
+	 'linkPrefixes': {'script': '../script'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Names By Place</h1>
+  
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
+  <table class="table table-hover" id="languages"></table>
+ 
+  
+</div>
+
+
+
