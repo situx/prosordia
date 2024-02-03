@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
  lexemesSparql = `
-SELECT ?name ?nameLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
+SELECT ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
   ?name wdt:P853 wd:${ q } .
   ?name wdt:P2 wd:Q31776 .
   ?name rdfs:label ?nameLabel .
@@ -19,8 +19,13 @@ SELECT ?name ?nameLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARA
     ?ref rdfs:label ?refLabel .
     FILTER(lang(?refLabel)="en")
   }
+  OPTIONAL {
+	?name wdt:P18 ?language .
+	?language rdfs:label ?languageLabel .
+	FILTER(lang(?languageLabel)="en")
+  }
 }
-GROUP BY ?name ?nameLabel ?gender ?genderLabel
+GROUP BY ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel
 ORDER BY ?nameLabel
 `
 
