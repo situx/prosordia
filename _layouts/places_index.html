@@ -9,7 +9,7 @@ SELECT ?place ?placeLabel ?description ?coords (COUNT(?name) AS ?names) WHERE {
   ?place wdt:P2 wd:Q8 .
   ?place rdfs:label ?placeLabel .
   FILTER(lang(?placeLabel)="en")
-  ?individual schema:description ?description .
+  ?place schema:description ?description .
   FILTER(lang(?description)="en")
   OPTIONAL {
 	?name wdt:P83 ?place .
