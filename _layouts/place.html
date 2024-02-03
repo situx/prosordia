@@ -31,7 +31,7 @@ WHERE
 	FILTER(lang(?languageLabel)="en")
   }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}
+} ORDER BY ?nameLabel
 `
 
 placeSparql = `
