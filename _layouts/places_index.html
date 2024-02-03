@@ -5,7 +5,7 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 # List of scripts with count of the number of characters
-SELECT ?place ?placeLabel ?description ?coords (COUNT(?name)AS ?names) WHERE {
+SELECT ?place ?placeLabel ?description ?coords (COUNT(?name) AS ?names) WHERE {
   ?place wdt:P2 wd:Q8 .
   ?place rdfs:label ?placeLabel .
   FILTER(lang(?placeLabel)="en")
@@ -21,6 +21,7 @@ SELECT ?place ?placeLabel ?description ?coords (COUNT(?name)AS ?names) WHERE {
 	?place wdt:P48 ?coords .
   }
 }
+GROUP BY ?place ?placeLabel ?description ?coords
 `
  
 
