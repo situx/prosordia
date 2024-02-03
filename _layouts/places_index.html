@@ -11,7 +11,8 @@ SELECT ?place ?placeLabel ?description ?coords (COUNT(?name) AS ?names) WHERE {
   FILTER(lang(?placeLabel)="en")
   ?place schema:description ?description .
   FILTER(lang(?description)="en")
-  ?name wdt:P83 ?place .
+  ?name wdt:P143 ?ref .
+  ?ref wdt:P83 ?place .
   ?name wdt:P2 wd:Q31776 .
   ?name rdfs:label ?nameLabel .
   FILTER(lang(?nameLabel)="en")
