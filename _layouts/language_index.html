@@ -9,7 +9,7 @@ SELECT
   ?number_of_names
   ?language ?languageLabel ?languageDescription
 WITH {
-  SELECT ?language (COUNT(*) AS ?number_of_lexemes) WHERE {
+  SELECT ?language (COUNT(*) AS ?number_of_names) WHERE {
     ?name wdt:P18 ?language .
 	?name wdt:P2 wd:Q31776 .
   }
