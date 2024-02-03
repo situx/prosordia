@@ -6,6 +6,7 @@ layout: base
  lexemesSparql = `
 SELECT ?name ?nameLabel ?gender ?genderLabel (GROUP_CONCAT(DISTINCT ?ref; SEPARATOR = " // ") AS ?refs) (GROUP_CONCAT(DISTINCT ?refLabel; SEPARATOR = " // ") AS ?refsLabel) WHERE {
   ?name wdt:P853 wd:${ q } .
+  ?name wdt:P2 wd:Q31776 .
   ?name rdfs:label ?nameLabel .
   FILTER(lang(?nameLabel)="en")
   OPTIONAL {
