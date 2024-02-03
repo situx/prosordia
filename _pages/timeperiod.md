@@ -1,4 +1,0 @@
----
-layout: timeperiod
-title: Timeperiod
----

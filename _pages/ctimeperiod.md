@@ -1,4 +1,0 @@
----
-layout: ctimeperiod
-title: Timeperiod
----

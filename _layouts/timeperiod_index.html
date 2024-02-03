@@ -1,0 +1,39 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+ lexemesSparql = `
+SELECT ?timeperiod ?timeperiodLabel ?description ?coords (COUNT(?name) AS ?names) WHERE {
+  ?timeperiod wdt:P2 wd:Q249725 .
+  ?timeperiod rdfs:label ?timeperiodLabel .
+  FILTER(lang(?timeperiodLabel)="en")
+  ?timeperiod schema:description ?description .
+  FILTER(lang(?description)="en")
+  ?name wdt:P853 ?timeperiod .
+  ?name rdfs:label ?nameLabel .
+  FILTER(lang(?nameLabel)="en")
+}
+GROUP BY ?place ?placeLabel ?description ?coords
+`
+
+ $(document).ready(function() {
+     sparqlToDataTable(lexemesSparql, "#lexical-categories", {
+	 linkPrefixes: {
+	     name: '../n'
+	 }
+     });
+ });
+
+</script>
+
+<h1>Names by Time Period</h1>
+
+<hr/>
+
+<div class="lexical-categories">
+
+    <table class="table table-hover" id="lexical-categories"></table>
+
+</div>
+

@@ -1,4 +1,0 @@
----
-layout: c
-title: Character
----
