@@ -14,7 +14,7 @@ WHERE
 `
 
 nameSparql = `
-SELECT ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel
+SELECT DISTINCT ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel
 WHERE 
 {
   ?name wdt:P2 wd:Q31776 .
