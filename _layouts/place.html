@@ -18,7 +18,7 @@ SELECT ?name ?nameLabel ?gender ?genderLabel ?language ?languageLabel
 WHERE 
 {
   ?name wdt:P2 wd:Q31776 .
-  ?name wdt:P343 ?ref .
+  ?name wdt:P143 ?ref .
   ?ref wdt:P695 wd:${ q } .
   OPTIONAL {
 	?name wdt:P625 ?gender .
