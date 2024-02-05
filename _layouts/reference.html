@@ -145,9 +145,14 @@ ORDER BY ?nameLabel
 
 imagesSparql = `
 SELECT 
-  ?image
+  ?image ?surface ?surfaceLabel
 WHERE {
-    wd:${ q } wdt:P188 ?image .
+    wd:${ q } p:P188 ?image .
+	OPTIONAL {
+		?image pq:P1029 ?surface .
+		?surface rdfs:label ?surfaceLabel .
+		FILTER(lang(?surfaceLabel)="en")
+	}
 }
 `
 
