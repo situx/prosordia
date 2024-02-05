@@ -147,9 +147,10 @@ imagesSparql = `
 SELECT 
   ?image ?surface ?surfaceLabel
 WHERE {
-    wd:${ q } p:P188 ?image .
+    wd:${ q } p:P188 ?imagee .
+	wd:${ q } wdt:P188 ?image .
 	OPTIONAL {
-		?image pq:P1029 ?surface .
+		?imagee pq:P1029 ?surface .
 		?surface rdfs:label ?surfaceLabel .
 		FILTER(lang(?surfaceLabel)="en")
 	}
