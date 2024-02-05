@@ -6,8 +6,9 @@ layout: base
     languagesSparql = `
 # List of scripts with count of the number of characters
 SELECT ?researchproject ?researchprojectLabel ?description (COUNT(distinct ?name) AS ?names) WHERE {
+  VALUES ?namesclasses { wd:Q31776 wd:Q24499 }
   ?name wdt:P8|wdt:P131 ?researchproject .
-  ?name wdt:P2 wd:Q31776|wd:Q24499 .
+  ?name wdt:P2 ?namesclasses .
   ?researchproject rdfs:label ?researchprojectLabel .
   FILTER(lang(?researchprojectLabel)="en")
   ?researchproject schema:description ?description .
