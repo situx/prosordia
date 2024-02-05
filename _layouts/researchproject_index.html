@@ -5,16 +5,20 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 # List of scripts with count of the number of characters
-SELECT ?researchproject ?researchprojectLabel ?description (COUNT(distinct ?name) AS ?names) WHERE {
+SELECT ?researchproject ?researchprojectLabel (COUNT(distinct ?name) AS ?names) WHERE {
   VALUES ?namesclasses { wd:Q31776 wd:Q24499 }
-  ?name wdt:P8|wdt:P131 ?researchproject .
   ?name wdt:P2 ?namesclasses .
+  {
+    ?name wdt:P8|wdt:P131 ?researchproject .
+  }UNION{
+    ?name wdt:P143 ?ref .
+    ?ref wdt:P8|wdt:P131 ?researchproject .
+  }
   ?researchproject rdfs:label ?researchprojectLabel .
   FILTER(lang(?researchprojectLabel)="en")
-  ?researchproject schema:description ?description .
-  FILTER(lang(?description)="en")
 }
-GROUP BY ?researchproject ?researchprojectLabel ?description
+GROUP BY ?researchproject ?researchprojectLabel
+ORDER BY ?researchprojectLabel
 `
  
 
