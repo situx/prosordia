@@ -5,7 +5,7 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 # List of scripts with count of the number of characters
-SELECT ?name ?nameLabel ?individual ?individualLabel ?description WHERE {
+SELECT ?name ?nameLabel ?surname ?surnameLabel ?individual ?individualLabel ?description WHERE {
   ?individual wdt:P248 ?name .
   ?name rdfs:label ?nameLabel .
   FILTER(lang(?nameLabel)="en")
@@ -15,6 +15,11 @@ SELECT ?name ?nameLabel ?individual ?individualLabel ?description WHERE {
   BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
   ?individual schema:description ?description .
   FILTER(lang(?description)="en")
+  OPTIONAL {
+	?individual wdt:P247 ?surname .
+	?surname rdfs:label ?surnameLabel .
+	FILTER(lang(?surnameLabel)="en")
+  }
 }
 `
  
