@@ -5,33 +5,16 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 # List of scripts with count of the number of characters
-SELECT ?individual ?individualLabel ?name ?nameLabel ?surname ?surnameLabel ?gender ?genderLabel ?career ?careerLabel ?description WHERE {
+SELECT ?name ?nameLabel ?individual ?individualLabel ?description WHERE {
+  ?individual wdt:P248 ?name .
+  ?name rdfs:label ?nameLabel .
+  FILTER(lang(?nameLabel)="en")
   ?individual wdt:P2 wd:Q7 .
   ?individual rdfs:label ?individualLabell .
   FILTER(lang(?individualLabell)="en")
   BIND(CONCAT(?individualLabell," (",SUBSTR(STR(?individual), 37),")") AS ?individualLabel)
   ?individual schema:description ?description .
   FILTER(lang(?description)="en")
-  OPTIONAL {
-	?individual wdt:P248 ?name .
-	?name rdfs:label ?nameLabel .
-	FILTER(lang(?nameLabel)="en")
-  }
-  OPTIONAL {
-	?individual wdt:P247 ?surname .
-	?surname rdfs:label ?surnameLabel .
-	FILTER(lang(?surnameLabel)="en")
-  }
-  OPTIONAL {
-	?individual wdt:P154 ?gender .
-	?gender rdfs:label ?genderLabel .	
-	FILTER(lang(?genderLabel)="en")
-  }
-  OPTIONAL {
-	?individual wdt:P165 ?career .
-	?career rdfs:label ?careerLabel .	
-	FILTER(lang(?careerLabel)="en")
-  }
 }
 `
  
@@ -41,7 +24,7 @@ SELECT ?individual ?individualLabel ?name ?nameLabel ?surname ?surnameLabel ?gen
 		        {	 
 	 'pBar':"progressbar",
 	 'pBarLabel':"progress-label",
-	 'linkPrefixes': {'script': '../script'}});
+	 'linkPrefixes': {'name': '../n'}});
  });
 
 </script>
