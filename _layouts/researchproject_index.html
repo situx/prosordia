@@ -1,0 +1,40 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+# List of scripts with count of the number of characters
+SELECT ?researchproject ?researchprojectLabel ?description (COUNT(distinct ?name) AS ?names) WHERE {
+  ?name wdt:P8|wdt:P131 ?researchproject .
+  ?name wdt:P2 wd:Q31776|wd:Q24499 .
+  ?researchproject rdfs:label ?researchprojectLabel .
+  FILTER(lang(?researchprojectLabel)="en")
+  ?researchproject schema:description ?description .
+  FILTER(lang(?description)="en")
+}
+GROUP BY ?researchproject ?researchprojectLabel ?description
+`
+ 
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+		        {	 
+	 'pBar':"progressbar",
+	 'pBarLabel':"progress-label",
+	 'linkPrefixes': {'place': '../place'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Names By FactGrid project</h1>
+  
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
+  <table class="table table-hover" id="languages"></table>
+ 
+  
+</div>
+
+
+
