@@ -54,9 +54,9 @@ ORDER BY ?nameLabel
   <table class="table table-hover" id="languages"></table>
   
   <h2>Names on medium graph</h2>
-  
+  <button class="btn btn-outline-dark btn-sm glyphicon glyphicon-fullscreen" onclick="toggleFullScreen('wikidataembed')">FullScreen</button>
   <div class="embed-responsive embed-responsive-4by3">
-  <iframe loading="lazy" class="embed-responsive-item" src="https://database.factgrid.de/query/embed.html#%0A%23defaultView%3AGraph%0A%20SELECT%20DISTINCT%0A%20%20%3Fvalue%20%3FvalueLabel%20%0A%20%20%3Fname%20%3FnameLabel%0A%20%20WHERE%20%7B%0A%20%20%20%20%0A%20%20%20%20%3Fname%20wdt%3AP143%20%3Fvalue%20.%0A%20%20%20%20%3Fname%20rdfs%3Alabel%20%3FnameLabel%20.%0A%20%20%20%20FILTER%20(LANG(%3FnameLabel)%20%3D%20'en')%0A%20%20%20%20%3Fvalue%20rdfs%3Alabel%20%3FvalueLabel%20.%0A%20%20%20%20FILTER%20(LANG(%3FvalueLabel)%20%3D%20'en')%0A%20%20%20%20%3Fvalue%20wdt%3AP2%20wd%3AQ512006%20.%0A%20%20%20%20%3Fvalue%20wdt%3AP131%20wd%3A${ q }%20.%0A%7D%0A%20" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  <iframe loading="lazy" id="wikidataembed" class="embed-responsive-item" src="https://database.factgrid.de/query/embed.html#%0A%23defaultView%3AGraph%0A%20SELECT%20DISTINCT%0A%20%20%3Fvalue%20%3FvalueLabel%20%0A%20%20%3Fname%20%3FnameLabel%0A%20%20WHERE%20%7B%0A%20%20%20%20%0A%20%20%20%20%3Fname%20wdt%3AP143%20%3Fvalue%20.%0A%20%20%20%20%3Fname%20rdfs%3Alabel%20%3FnameLabel%20.%0A%20%20%20%20FILTER%20(LANG(%3FnameLabel)%20%3D%20'en')%0A%20%20%20%20%3Fvalue%20rdfs%3Alabel%20%3FvalueLabel%20.%0A%20%20%20%20FILTER%20(LANG(%3FvalueLabel)%20%3D%20'en')%0A%20%20%20%20%3Fvalue%20wdt%3AP2%20wd%3AQ512006%20.%0A%20%20%20%20%3Fvalue%20wdt%3AP131%20wd%3A${ q }%20.%0A%7D%0A%20" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
   </div>
 </div>
 
