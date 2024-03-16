@@ -3,6 +3,13 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function applyPropertyMapping(thequery,propertyMapping){
+	for(key in propertyMapping){
+		thequery=thequery.replace(key,propertyMapping[key]["replacement"])
+	}
+	return thequery
+}
+
 function detectCorrectParameter(url){
 	if(url.startsWith("Q") && url.includes("signlist")){
 		return "?tp="+url.replaceAll("/","")
@@ -96,7 +103,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 	var convertedRow = {};
 	for (var key in data[i]) {
 		if(key.includes("_cols")){
-			splitted=data[i][key].split(sepchar)
+			splitted=data[i][key].split("###")
 			for(var j=0;j<splitted.length;j+=2){
 				if(splitted[j] in convertedRow){
 					convertedRow[splitted[j]]=convertedRow[splitted[j]]+" / "+splitted[j+1]
@@ -139,21 +146,29 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 							
 			}
 	    } else if (key + 'Label' in data[i]) {
-			var linkcount = (data[i][key].match(/http/g) || []).length;
+			var linkcount = (data[i][key].match(/http|\.\.\//g) || []).length;
 			sepchar=" // "
+			console.log(data[i][key])
+			console.log(linkcount)
 			if(linkcount==0){
 				convertedRow[key] = '<span>' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</span>';
 			}else if(linkcount==1){
 				convertedRow[key] = '<a href="' +
 				(linkPrefixes[key] || "") + 
-				addParamsToLink(detectCorrectParameter(data[i][key].substr(36)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")) +
+				addParamsToLink(detectCorrectParameter(data[i][key].substr(31)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")) +
 				'">' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</a>';
 			}else if(linkcount>1){
-				//console.log(data[i][key])
-				//console.log(linkcount)
+				console.log(data[i][key])
+				console.log(linkcount)
 				sepchar=" // "
 				try{
-					secondocc=data[i][key].indexOf("http",7)
+					if(data[i][key].includes("http")){
+						secondocc=data[i][key].indexOf("http",7)
+					}else if(data[i][key].includes("../")){
+						secondocc=data[i][key].indexOf("../",3)
+					}else{
+						secondocc=data[i][key].indexOf(" ")
+					}
 					firsturl=data[i][key].substring(0,secondocc)
 					var onlyNumbers = firsturl.replace(/\D/g,'');
 					var lastNumber = onlyNumbers.substring(onlyNumbers.length - 1);
@@ -181,15 +196,48 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 		// pass
 		
 	    } else if (key + 'Url' in data[i]) {
-		if (data[i][key + 'Url']) {
-		    convertedRow[key] = '<a href="' +
-			(linkPrefixes[key] || "")+ data[i][key + 'Url'] +
-			'">' + data[i][key] + '</a>';
-		}
-		else {
-		    // If the URL is empty we do not create a link
-		    convertedRow[key] = data[i][key];
-		}
+			if (data[i][key + 'Url']) {
+				var linkcount = (data[i][key + 'Url'].match(/http|\.\.\//g) || []).length;
+				sepchar=" // "
+				console.log(data[i][key + 'Url'])
+				console.log(linkcount)
+				if(linkcount==1){
+					convertedRow[key] = '<a target="_blank\" href="' +(linkPrefixes[key] || "")+ data[i][key + 'Url'] +'">' + data[i][key] + '</a>';
+				}else if(linkcount>1){
+					console.log(data[i][key + 'Url'])
+					console.log(linkcount)
+					sepchar=" // "
+					/*try{
+						if(data[i][key + 'Url'].includes("http")){
+							secondocc=data[i][key + 'Url'].indexOf("http",7)
+						}else if(data[i][key + 'Url'].includes("../")){
+							secondocc=data[i][key + 'Url'].indexOf("../",4)
+						}else{
+							secondocc=data[i][key + 'Url'].indexOf(" ")
+						}
+						firsturl=data[i][key + 'Url'].substring(0,secondocc)
+						var onlyNumbers = firsturl.replace(/\D/g,'');
+						var lastNumber = onlyNumbers.substring(onlyNumbers.length - 1);
+						var lastNumberIndex=firsturl.lastIndexOf(lastNumber)
+						sepchar=data[i][key + 'Url'].substring(lastNumberIndex+1,secondocc)
+					}catch(err){
+						console.log("ERROR: "+err)
+					}*/
+					urls=data[i][key + 'Url'].split(sepchar)
+					labs=data[i][key].split(sepchar)	
+					res=""
+					for(let i = 0; i < urls.length; i++){
+						res+="<a href=\""+urls[i]+"\" target=\"_blank\">"+labs[i]+"</a> "+sepchar+" "
+					}
+					console.log("THERES: "+res)
+					res=res.substring(0,res.length-sepchar.length-2)
+					convertedRow[key]=res	
+				}				
+			}
+			else {
+				// If the URL is empty we do not create a link
+				convertedRow[key] = data[i][key];
+			}
 	    } else if (key.substr(-3) == 'Url') {
 		// pass
 
@@ -207,6 +255,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
     }
     return {data: convertedData, columns: convertedColumns}
 }
+
 
 function toggleFullScreen(elementid) {
   if (!document.fullscreenElement) {
@@ -265,6 +314,33 @@ function sparqlToDataTable(sparql, element, options={}) {
 		  value: false
 		});	
 	}
+	var usepropertyMapping=false
+	if(usepropertyMapping){
+		propertyMapping={
+		"wdt:":{"label":"Namespace","replacement":""},
+		"P18":{"label":"language","replacement":""},
+		"P2":{"label":"instance of","replacement":""},
+		"P625":{"label":"predominant gender usage","replacement":""},
+		"P1853":{"label":"time frame","replacement":""},
+		"P143":{"label":"mentioned in","replacement":""},
+		"P54":{"label":"page","replacement":""},
+		"P1030":{"label":"line","replacement":""},
+		"P1029":{"label":"surface","replacement":""},
+		"P927":{"label":"document attested by","replacement":""},
+		"P248":{"label":"given name","replacement":""},
+		"P154":{"label":"gender","replacement":""},
+		"P121":{"label":"type of work","replacement":""},
+		"P480":{"label":"writing material","replacement":""},
+		"P695":{"label":"find spot","replacement":""},
+		"P156":{"label":"online presence","replacement":""},
+		"P692":{"label":"CDLI ID","replacement":""},
+		"P131":{"label":"Resarch projects that contributed to this dataset","replacement":""},
+		"P8":{"label":"part of","replacement":""},
+		"Q7":{"label":"human","replacement":""}
+		}
+		sparql=applyPropertyMapping(sparql,propertyMapping)
+	}
+
     
     var post_url = "https://database.factgrid.de/sparql";
     var post_data = "query=" + encodeURIComponent(sparql) + '&format=json'
