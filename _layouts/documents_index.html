@@ -1,0 +1,42 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+# List of languages with count of the number of lexemes
+SELECT
+  ?number_of_docs
+  ?language ?languageLabel ?languageDescription
+WITH {
+  SELECT ?language (COUNT(*) AS ?number_of_docs) WHERE {
+    ?name wdt:P18 ?language .
+    {?name wdt:P2 wd:Q10671}UNION{
+	?name wdt:P2/wdt:P2 wd:Q11208 .
+    }
+  }
+  GROUP BY ?language
+} AS %languages
+WHERE {
+  INCLUDE %languages
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY DESC(?number_of_docs)
+  `
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+		        {'linkPrefixes': {'language': '../language'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Names by language</h1>
+
+  <table class="table table-hover" id="languages"></table>
+  
+</div>
+
+
+
