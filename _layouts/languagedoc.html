@@ -64,7 +64,7 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel (GROUP_CONCAT(DISTINCT ?genre; SEPARATOR = " // ") AS ?genres) (GROUP_CONCAT(DISTINCT ?genrelabel; SEPARATOR = " // ") AS ?genreLabel) WHERE {
+SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel (GROUP_CONCAT(DISTINCT ?genre; SEPARATOR = " // ") AS ?genres) (GROUP_CONCAT(DISTINCT ?genrelabel; SEPARATOR = " // ") AS ?genresLabel) WHERE {
   BIND(wd:${ q } AS ?language)
   ?document wdt:P18 ?language .
   {?document wdt:P2 wd:Q10671}UNION{
