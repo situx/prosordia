@@ -10,7 +10,7 @@ WHERE {
   BIND(wd:${ q } AS ?language)
   {
     BIND(1 AS ?order)
-    BIND("Language" AS ?description)
+    BIND("Genre" AS ?description)
     ?language rdfs:label ?value_string .
     FILTER (LANG(?value_string) = 'en')
     BIND(COALESCE(?value_string, ?q) AS ?value)
@@ -76,8 +76,8 @@ SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiod
   FILTER(lang(?genreLabel)="en")
   OPTIONAL {
     ?document wdt:P18 ?language .
-    ?language rdfs:label ?languagelabel .
-    FILTER(lang(?languagelabel)="en")
+    ?language rdfs:label ?languageLabel .
+    FILTER(lang(?languageLabel)="en")
   }
   OPTIONAL {
     ?document wdt:P853 ?timeperiod .
