@@ -1,0 +1,129 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+  dataSparql = `
+# tool: ordia
+SELECT ?description ?value ?valueUrl
+WHERE {
+  BIND(wd:${ q } AS ?language)
+  {
+    BIND(1 AS ?order)
+    BIND("Language" AS ?description)
+    ?language rdfs:label ?value_string .
+    FILTER (LANG(?value_string) = 'en')
+    BIND(COALESCE(?value_string, ?q) AS ?value)
+  }
+  UNION
+  {
+    SELECT
+      (2 AS ?order)
+      ("Number of lexemes" AS ?description)
+      (COUNT(*) AS ?value)
+    {
+      [] dct:language wd:${ q } .
+      BIND(1 AS ?dummy)
+    }
+    GROUP BY ?dummy
+  }
+  UNION
+  {
+    SELECT
+      (3 AS ?order)
+      ("Number of senses" AS ?description)
+      (COUNT(*) AS ?value)
+    {
+      [] ^ontolex:sense / dct:language wd:${ q } .
+      BIND(1 AS ?dummy)
+    }
+    GROUP BY ?dummy
+  }
+  UNION
+  {
+    SELECT
+      (4 AS ?order)
+      ("Number of forms" AS ?description)
+      (COUNT(*) AS ?value)
+    {
+      [] ^ontolex:lexicalForm / dct:language wd:${ q } .
+      BIND(1 AS ?dummy)
+    }
+    GROUP BY ?dummy
+  }
+  UNION
+  {
+    BIND(10 AS ?order)
+    BIND("Number of speakers" AS ?description)
+    ?language wdt:P1098 ?value .
+  }
+} 
+ORDER BY ?order
+`;
+  
+ lexemesSparql = `
+# tool: ordia
+# title: List of lexemes for a language
+SELECT ?name ?nameLabel ?language ?languageLabel?timeperiod ?timeperiodLabel WHERE {
+  BIND(wd:Q471146 AS ?language)
+  ?name wdt:P18 ?language .
+  {?name wdt:P2 wd:Q10671}UNION{
+	?name wdt:P2/wdt:P2 wd:Q11208 .
+    }
+  ?name rdfs:label ?nameLabel .
+  ?language rdfs:label ?languageLabel .
+  FILTER(lang(?nameLabel)="en")
+  FILTER(lang(?languageLabel)="en")
+  OPTIONAL {
+    ?name wdt:P853 ?timeperiod .
+    ?timeperiod rdfs:label ?timeperiodLabel .
+    FILTER(lang(?timeperiodLabel)="en")
+  }
+}GROUP BY ?name ?nameLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel
+ORDER BY ?nameLabel
+`
+
+ $(document).ready(function() {
+     sparqlToDataTable(dataSparql, "#data");
+     sparqlToDataTable(lexemesSparql, "#lexemes", {
+	 'pBar':"progressbar",
+	 'pBarLabel':"progress-label",
+	 'linkPrefixes': {
+	     'name': '../n',
+	     'name_category': '../lexical_category'
+	  },
+	  'linkParams':{
+		'lexeme': '&qb='+q+'&qbLabel='+qLabel
+	  }
+	  });
+ });
+
+</script>
+
+<div class="language-entries">
+  
+  <h1>${ qLabel } (${ q })</h1>
+
+  <a title="Back"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="../language_index/index.html">←</a>
+  <a title="View and edit item in Factgrid"
+     role="button"
+     class="btn btn-outline-dark btn-sm"
+     href="https://database.factgrid.de/wiki/${ q }">Factgrid ↗</a>
+
+  <h2>Data</h2>
+
+  <table class="table table-hover" id="data"></table>
+
+  <h2>Documents</h2>
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
+  <table class="table table-hover" id="lexemes"></table>
+
+
+</div>
+
+
+
+
