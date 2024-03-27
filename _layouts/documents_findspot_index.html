@@ -6,10 +6,10 @@ layout: base
     languagesSparql = `
 SELECT
   ?number_of_docs
-  ?findspot ?findspotLabel ?languageDescription
+  ?findspot ?findspotLabel ?findspotDescription
 WITH {
-  SELECT ?genre (COUNT(*) AS ?number_of_docs) WHERE {
-    ?name wdt:P695 ?genre .
+  SELECT ?findspot (COUNT(*) AS ?number_of_docs) WHERE {
+    ?name wdt:P695 ?findspot .
     {?name wdt:P2 wd:Q10671}UNION{
 	?name wdt:P2/wdt:P2 wd:Q11208 .
     }
