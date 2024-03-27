@@ -66,7 +66,7 @@ ORDER BY ?order
 # title: List of lexemes for a language
 SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel WHERE {
   BIND(wd:${ q } AS ?findspot)
-  ?document wdt:P121 ?findspot .
+  ?document wdt:P695 ?findspot .
   {?document wdt:P2 wd:Q10671}UNION{
 	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
