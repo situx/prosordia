@@ -65,7 +65,7 @@ ORDER BY ?order
 # tool: ordia
 # title: List of lexemes for a language
 SELECT ?document ?documentLabel ?language ?languageLabel?timeperiod ?timeperiodLabel WHERE {
-  BIND(wd:Q471146 AS ?language)
+  BIND(wd:${ q } AS ?language)
   ?document wdt:P18 ?language .
   {?document wdt:P2 wd:Q10671}UNION{
 	?document wdt:P2/wdt:P2 wd:Q11208 .
