@@ -71,7 +71,7 @@ SELECT ?document ?documentLabel ?language ?languageLabel ?genre ?genreLabel WHER
 	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
   ?document rdfs:label ?documentLabel .
-  ?findspot rdfs:label ?timeperiodLabel .
+  ?timeperiod rdfs:label ?timeperiodLabel .
   FILTER(lang(?documentLabel)="en")
   FILTER(lang(?timeperiodLabel)="en")
   OPTIONAL {
