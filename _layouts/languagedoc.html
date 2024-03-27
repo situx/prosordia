@@ -64,23 +64,23 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?name ?nameLabel ?language ?languageLabel?timeperiod ?timeperiodLabel WHERE {
+SELECT ?document ?dcoumentLabel ?language ?languageLabel?timeperiod ?timeperiodLabel WHERE {
   BIND(wd:Q471146 AS ?language)
-  ?name wdt:P18 ?language .
-  {?name wdt:P2 wd:Q10671}UNION{
-	?name wdt:P2/wdt:P2 wd:Q11208 .
+  ?document wdt:P18 ?language .
+  {?document wdt:P2 wd:Q10671}UNION{
+	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
-  ?name rdfs:label ?nameLabel .
+  ?document rdfs:label ?documentLabel .
   ?language rdfs:label ?languageLabel .
-  FILTER(lang(?nameLabel)="en")
+  FILTER(lang(?documentLabel)="en")
   FILTER(lang(?languageLabel)="en")
   OPTIONAL {
     ?name wdt:P853 ?timeperiod .
     ?timeperiod rdfs:label ?timeperiodLabel .
     FILTER(lang(?timeperiodLabel)="en")
   }
-}GROUP BY ?name ?nameLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel
-ORDER BY ?nameLabel
+}GROUP BY ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel
+ORDER BY ?documentLabel
 `
 
  $(document).ready(function() {
@@ -89,7 +89,7 @@ ORDER BY ?nameLabel
 	 'pBar':"progressbar",
 	 'pBarLabel':"progress-label",
 	 'linkPrefixes': {
-	     'name': '../n',
+	     'name': '../reference',
 	     'name_category': '../lexical_category'
 	  },
 	  'linkParams':{
