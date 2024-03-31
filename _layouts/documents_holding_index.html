@@ -1,0 +1,41 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+SELECT
+  ?number_of_docs
+  ?holding ?holdingLabel ?holdingDescription
+WITH {
+  SELECT ?genre (COUNT(*) AS ?number_of_docs) WHERE {
+    ?name wdt:P329 ?holding .
+    {?name wdt:P2 wd:Q10671}UNION{
+	?name wdt:P2/wdt:P2 wd:Q11208 .
+    }
+  }
+  GROUP BY ?holding
+} AS %languages
+WHERE {
+  INCLUDE %languages
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY DESC(?number_of_docs)
+  `
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+		        {'linkPrefixes': {'holding': '../holdingdoc'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Documents by genre</h1>
+
+  <table class="table table-hover" id="languages"></table>
+  
+</div>
+
+
+
