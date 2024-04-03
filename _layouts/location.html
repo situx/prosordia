@@ -10,7 +10,7 @@ WHERE {
   BIND(wd:${ q } AS ?language)
   {
     BIND(1 AS ?order)
-    BIND("Country" AS ?description)
+    BIND("Location" AS ?description)
     ?language rdfs:label ?value_string .
     FILTER (LANG(?value_string) = 'en')
     BIND(COALESCE(?value_string, ?q) AS ?value)
@@ -65,8 +65,7 @@ ORDER BY ?order
 # tool: ordia
 # title: List of lexemes for a language
 SELECT ?location ?locationLabel ?coord ?address WHERE {
-  BIND(wd:${ q } AS ?country)
-  ?location wdt:P297 ?country .
+  BIND(wd:${ q } AS ?location)
   OPTIONAL {
 	?location wdt:P153 ?address .
 	?address rdfs:label ?addressLabel .
@@ -87,7 +86,7 @@ ORDER BY ?locationLabel
 	 'pBar':"progressbar",
 	 'pBarLabel':"progress-label",
 	 'linkPrefixes': {
-	     'location': '../location',
+	     'document': '../reference',
 	     'name_category': '../lexical_category'
 	  },
 	  'linkParams':{
