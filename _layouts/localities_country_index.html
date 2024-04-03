@@ -5,10 +5,10 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 SELECT
-  ?number_of_docs
+  ?number_of_locs
   ?country ?countryLabel ?countryDescription
 WITH {
-  SELECT ?fgproject (COUNT(*) AS ?number_of_docs) WHERE {
+  SELECT ?fgproject (COUNT(*) AS ?number_of_locs) WHERE {
 	?document wdt:P297 ?country .
 	?document wdt:P2 wd:Q8 .
   }
@@ -18,7 +18,7 @@ WHERE {
   INCLUDE %languages
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
-ORDER BY DESC(?number_of_docs)
+ORDER BY DESC(?number_of_locs)
 `
 
  $(document).ready(function() {
