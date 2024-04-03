@@ -64,15 +64,18 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?location ?locationLabel ?coord WHERE {
+SELECT ?location ?locationLabel ?coord ?address WHERE {
   BIND(wd:Q164359 AS ?country)
   ?location wdt:P297 ?country .
+  OPTIONAL {
+	?location wdt:P297 ?address .
+  }
   ?location rdfs:label ?locationLabel .
   FILTER(lang(?locationLabel)="en")
   OPTIONAL {
-    ?location wdt:P48 ?coord .
+    ?location wdt:P48|wdt:P1035 ?coord .
   }
-}GROUP BY ?location ?locationLabel ?coord 
+}GROUP BY ?location ?locationLabel ?coord ?address
 ORDER BY ?locationLabel
 `
 
