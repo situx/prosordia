@@ -37,6 +37,13 @@ GROUP BY ?place ?placeLabel ?description ?coords
 <div class="languages">
   <h1>Names By Place</h1>
   
+  <h2>Places Map</h2>
+  <button class="btn btn-outline-dark btn-sm glyphicon glyphicon-fullscreen" onclick="toggleFullScreen('wikidataembed')">FullScreen</button>
+  <div class="embed-responsive embed-responsive-4by3">
+  <iframe loading="lazy" allow="fullscreen" id="wikidataembed" class="embed-responsive-item" src="https://database.factgrid.de/query/embed.html#%0A%23defaultView%3AMap%0A%20SELECT%20%3Fplace%20%3FplaceLabel%20%3Fdescription%20%3Fcoords%20(COUNT(distinct%20%3Fname)%20AS%20%3Fnames)%20WHERE%20%7B%0A%20%20%3Fplace%20wdt%3AP2%20wd%3AQ8%20.%0A%20%20%3Fplace%20rdfs%3Alabel%20%3FplaceLabel%20.%0A%20%20FILTER(lang(%3FplaceLabel)%3D%22en%22)%0A%20%20%3Fplace%20schema%3Adescription%20%3Fdescription%20.%0A%20%20FILTER(lang(%3Fdescription)%3D%22en%22)%0A%20%20%3Fname%20wdt%3AP143%20%3Fref%20.%0A%20%20%3Fref%20wdt%3AP695%20%3Fplace%20.%0A%20%20%3Fname%20wdt%3AP2%20wd%3AQ31776%20.%0A%20%20%3Fname%20rdfs%3Alabel%20%3FnameLabel%20.%0A%20%20FILTER(lang(%3FnameLabel)%3D%22en%22)%0A%20%20OPTIONAL%20%7B%0A%09%3Fplace%20wdt%3AP48%20%3Fcoords%20.%0A%20%20%7D%0A%7D%0AGROUP%20BY%20%3Fplace%20%3FplaceLabel%20%3Fdescription%20%3Fcoords%0A" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  </div>
+  
+  <h1>Names</h1>
   <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="languages"></table>
  
