@@ -1,0 +1,41 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+SELECT
+  ?number_of_docs
+  ?author ?findspotLabel ?findspotDescription
+WITH {
+  SELECT ?author (COUNT(*) AS ?number_of_docs) WHERE {
+    ?name wdt:P21 ?author .
+    {?name wdt:P2 wd:Q10671}UNION{
+	?name wdt:P2 wd:Q11208 .
+    }
+  }
+  GROUP BY ?author
+} AS %languages
+WHERE {
+  INCLUDE %languages
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY DESC(?number_of_docs)
+  `
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+	 {'linkPrefixes': {'author': '../individual'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Documents by author</h1>
+
+  <table class="table table-hover" id="languages"></table>
+  
+</div>
+
+
+
