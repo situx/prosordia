@@ -6,7 +6,7 @@ layout: base
     languagesSparql = `
 SELECT
   ?number_of_docs
-  ?author ?findspotLabel ?findspotDescription
+  ?author ?authorLabel ?authorDescription
 WITH {
   SELECT ?author (COUNT(*) AS ?number_of_docs) WHERE {
     ?name wdt:P21 ?author .
