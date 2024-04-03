@@ -5,12 +5,13 @@ layout: base
 <script type="text/javascript">
     languagesSparql = `
 SELECT
-  ?number_of_locs
+  ?number_of_docs
   ?country ?countryLabel ?countryDescription
 WITH {
-  SELECT ?country (COUNT(*) AS ?number_of_locs) WHERE {
+  SELECT ?fgproject (COUNT(*) AS ?number_of_docs) WHERE {
 	?document wdt:P297 ?country .
 	?document wdt:P2 wd:Q8 .
+    }
   }
   GROUP BY ?country
 } AS %languages
@@ -18,19 +19,20 @@ WHERE {
   INCLUDE %languages
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }
-ORDER BY DESC(?number_of_locs)
+ORDER BY DESC(?number_of_docs)
 `
 
  $(document).ready(function() {
      sparqlToDataTable(languagesSparql, "#languages",
-		        {'linkPrefixes': {'country': '../countryloc'}});
+	  {	 'pBar':"progressbar",
+	 'pBarLabel':"progress-label",'linkPrefixes': {'country': '../countryloc'}});
  });
 
 </script>
 
 <div class="languages">
   <h1>Localities by Country</h1>
-
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="languages"></table>
   
 </div>
