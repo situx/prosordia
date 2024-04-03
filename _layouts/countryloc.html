@@ -67,8 +67,8 @@ ORDER BY ?order
 SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel WHERE {
   BIND(wd:${ q } AS ?country)
   ?document wdt:P329 ?country .
-  {?document wdt:P2 wd:Q10671}UNION{
-	?document wdt:P2 wd:Q11208 .
+  {?document wdt:P2 wd:Q8}UNION{
+	?document wdt:P3/wdt:P2 wd:Q8 .
     }
   ?document rdfs:label ?documentLabel .
   ?holding rdfs:label ?countryLabel .
