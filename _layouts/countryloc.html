@@ -68,7 +68,7 @@ SELECT ?location ?locationLabel ?coord ?address WHERE {
   BIND(wd:Q164359 AS ?country)
   ?location wdt:P297 ?country .
   OPTIONAL {
-	?location wdt:P297 ?address .
+	?location wdt:P153 ?address .
 	?address rdfs:label ?addressLabel .
 	FILTER(lang(?addressLabel)="en")
   }
