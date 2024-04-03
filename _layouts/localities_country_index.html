@@ -8,7 +8,7 @@ SELECT
   ?number_of_docs
   ?country ?countryLabel ?countryDescription
 WITH {
-  SELECT ?fgproject (COUNT(*) AS ?number_of_docs) WHERE {
+  SELECT ?country (COUNT(*) AS ?number_of_docs) WHERE {
 	?document wdt:P297 ?country .
 	?document wdt:P2 wd:Q8 .
     }
