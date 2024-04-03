@@ -71,7 +71,7 @@ SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiod
 	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
   ?document rdfs:label ?documentLabel .
-  ?holding rdfs:label ?holdingLabel .
+  ?fgproject rdfs:label ?fgprojectLabel .
   FILTER(lang(?documentLabel)="en")
   FILTER(lang(?fgprojectLabel)="en")
   OPTIONAL {
