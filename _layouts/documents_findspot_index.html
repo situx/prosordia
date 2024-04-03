@@ -35,6 +35,12 @@ ORDER BY DESC(?number_of_docs)
 
   <table class="table table-hover" id="languages"></table>
   
+  <h2>Findspot Map</h2>
+  <button class="btn btn-outline-dark btn-sm glyphicon glyphicon-fullscreen" onclick="toggleFullScreen('wikidataembed')">FullScreen</button>
+  <div class="embed-responsive embed-responsive-4by3">
+  <iframe loading="lazy" allow="fullscreen" id="wikidataembed" class="embed-responsive-item" src="https://database.factgrid.de/query/embed.html#%0A%23defaultView%3AMap%0A%20SELECT%0A%20%20%3Fnumber_of_docs%0A%20%20%3Ffindspot%20%3FfindspotLabel%20%3FfindspotDescription%0AWITH%20%7B%0A%20%20SELECT%20%3Ffindspot%20(COUNT(*)%20AS%20%3Fnumber_of_docs)%20WHERE%20%7B%0A%20%20%20%20%3Fname%20wdt%3AP695%20%3Ffindspot%20.%0A%20%20%20%20%7B%3Fname%20wdt%3AP2%20wd%3AQ10671%7DUNION%7B%0A%09%3Fname%20wdt%3AP2%2Fwdt%3AP2%20wd%3AQ11208%20.%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20GROUP%20BY%20%3Ffindspot%0A%7D%20AS%20%25languages%0AWHERE%20%7B%0A%20%20INCLUDE%20%25languages%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D%0AORDER%20BY%20DESC(%3Fnumber_of_docs)%0A%20%20" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  </div>
+  
 </div>
 
 
