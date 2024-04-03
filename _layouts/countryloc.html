@@ -110,6 +110,12 @@ ORDER BY ?locationLabel
 
   <table class="table table-hover" id="data"></table>
 
+  <h2>Location Map</h2>
+  <button class="btn btn-outline-dark btn-sm glyphicon glyphicon-fullscreen" onclick="toggleFullScreen('wikidataembed')">FullScreen</button>
+  <div class="embed-responsive embed-responsive-4by3">
+  <iframe loading="lazy" allow="fullscreen" id="wikidataembed" class="embed-responsive-item" src="https://database.factgrid.de/query/embed.html#%0A%23defaultView%3AMap%0A%20SELECT%20%3Flocation%20%3FlocationLabel%20%3Fcoord%20WHERE%20%7B%0A%20%20BIND(wd%3A${ q }%20AS%20%3Fcountry)%0A%20%20%3Flocation%20wdt%3AP297%20%3Fcountry%20.%0A%20%20%3Flocation%20rdfs%3Alabel%20%3FlocationLabel%20.%0A%20%20FILTER(lang(%3FlocationLabel)%3D%22en%22)%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Flocation%20wdt%3AP48%20%3Fcoord%20.%0A%20%20%7D%0A%7DGROUP%20BY%20%3Flocation%20%3FlocationLabel%20%3Fcoord%20%0AORDER%20BY%20%3FlocationLabel%0A" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  </div>
+
   <h2>Locations</h2>
   <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="lexemes"></table>
