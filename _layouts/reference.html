@@ -74,7 +74,7 @@ WHERE {
   {
     BIND(7 AS ?order)
     BIND("Online presence" AS ?description)
-    ?name wdt:P156 ?value_Url .
+    ?name wdt:P138 ?value_Url .
     BIND(?value_Url AS ?valueLabel)
   }UNION 
   {
@@ -90,6 +90,18 @@ WHERE {
     ?name wdt:P692 ?value .
     BIND(?value AS ?valueLabel)
     BIND(CONCAT("https://cdli.ucla.edu/search/archival_view.php?ObjectID=",?value) AS ?value_Url)
+  }UNION 
+  {
+    BIND(10 AS ?order)
+    BIND("Online information" AS ?description)
+    ?name wdt:P146 ?value_Url .
+    BIND(?value_Url AS ?valueLabel)
+  }UNION 
+  {
+    BIND(11 AS ?order)
+    BIND("3d model" AS ?description)
+    ?name wdt:P1034 ?value_Url .
+    BIND(?value_Url AS ?valueLabel)
   }
 }
 ORDER BY ?order
