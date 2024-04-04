@@ -43,10 +43,12 @@ WHERE {
   } UNION 
   {
     BIND(3 AS ?order)
-    BIND("Type of work" AS ?description)
-    ?name wdt:P121 ?value_Url .
-    ?value_Url rdfs:label ?valueLabel .
-    FILTER(lang(?valueLabel)="en")
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	  BIND("Type of work" AS ?description)
+	  wd:Q401 wdt:P121 ?value .
+	  ?value rdfs:label ?valueLabel .
+	  FILTER(lang(?valueLabel)="en")
+    }GROUP BY ?description ORDER BY ?valuelabel }  
   } UNION 
   {
     BIND(4 AS ?order)
@@ -66,10 +68,12 @@ WHERE {
   }UNION 
   {
     BIND(6 AS ?order)
-    BIND("Findspot" AS ?description)
-    ?name wdt:P695 ?value_Url .
-    ?value_Url rdfs:label ?valueLabel .
-    FILTER(lang(?valueLabel)="en")
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	  BIND("Findspot" AS ?description)
+	  wd:Q401 wdt:P695 ?value .
+	  ?value rdfs:label ?valueLabel .
+	  FILTER(lang(?valueLabel)="en")
+    }GROUP BY ?description ORDER BY ?valuelabel }  
   }UNION 
   {
     BIND(7 AS ?order)
