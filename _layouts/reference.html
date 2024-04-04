@@ -20,10 +20,12 @@ WHERE {
   } UNION 
   {
     BIND(1 AS ?order)
-    BIND("Alternative Name" AS ?description)
-    ?name skos:altLabel ?value .
-	FILTER(lang(?value)="en")
-    BIND(?value AS ?valueLabel)
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	  BIND("Alternative Name" AS ?description)
+	  BIND(wd:${ q } AS ?valueurl)
+	  wd:${ q } skos:altLabel ?value .
+	  BIND(?value AS ?valueLabel)
+    }GROUP BY ?description ORDER BY ?valuelabel }
   }
   UNION 
   {
@@ -45,7 +47,7 @@ WHERE {
     BIND(3 AS ?order)
 	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
 	  BIND("Type of work" AS ?description)
-	  wd:Q401 wdt:P121 ?value .
+	  wd:${ q } wdt:P121 ?value .
 	  ?value rdfs:label ?valueLabel .
 	  FILTER(lang(?valueLabel)="en")
     }GROUP BY ?description ORDER BY ?valuelabel }  
@@ -70,7 +72,7 @@ WHERE {
     BIND(6 AS ?order)
 	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
 	  BIND("Findspot" AS ?description)
-	  wd:Q401 wdt:P695 ?value .
+	  wd:${ q } wdt:P695 ?value .
 	  ?value rdfs:label ?valueLabel .
 	  FILTER(lang(?valueLabel)="en")
     }GROUP BY ?description ORDER BY ?valuelabel }  
