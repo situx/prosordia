@@ -20,11 +20,11 @@ WHERE {
   } UNION 
   {
     BIND(1 AS ?order)
-	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?valueLabel) WHERE {     
 	  BIND("Alternative Name" AS ?description)
 	  BIND(wd:${ q } AS ?valueurl)
 	  wd:${ q } skos:altLabel ?value .
-	  BIND(?value AS ?valueLabel)
+	  BIND(?value AS ?valuelabel)
     }GROUP BY ?description ORDER BY ?valuelabel }
   }
   UNION 
@@ -45,7 +45,7 @@ WHERE {
   } UNION 
   {
     BIND(3 AS ?order)
-	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?valueLabel) WHERE {     
 	  BIND("Type of work" AS ?description)
 	  wd:${ q } wdt:P121 ?valueurl .
 	  ?valueurl rdfs:label ?valuelabel .
@@ -70,7 +70,7 @@ WHERE {
   }UNION 
   {
     BIND(6 AS ?order)
-	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
+	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?valueLabel) WHERE {     
 	  BIND("Findspot" AS ?description)
 	  wd:${ q } wdt:P695 ?valueurl .
 	  ?valueurl rdfs:label ?valuelabel .
