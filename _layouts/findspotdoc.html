@@ -10,7 +10,7 @@ WHERE {
   BIND(wd:${ q } AS ?language)
   {
     BIND(1 AS ?order)
-    BIND("Genre" AS ?description)
+    BIND("Find spot" AS ?description)
     ?language rdfs:label ?value_string .
     FILTER (LANG(?value_string) = 'en')
     BIND(COALESCE(?value_string, ?q) AS ?value)
