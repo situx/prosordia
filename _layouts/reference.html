@@ -47,8 +47,8 @@ WHERE {
     BIND(3 AS ?order)
 	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
 	  BIND("Type of work" AS ?description)
-	  wd:${ q } wdt:P121 ?value .
-	  ?value rdfs:label ?valueLabel .
+	  wd:${ q } wdt:P121 ?valueurl .
+	  ?valueurl rdfs:label ?valueLabel .
 	  FILTER(lang(?valueLabel)="en")
     }GROUP BY ?description ORDER BY ?valuelabel }  
   } UNION 
@@ -72,8 +72,8 @@ WHERE {
     BIND(6 AS ?order)
 	{SELECT ?description (GROUP_CONCAT(?valueurl; separator=" // ") AS ?value_Url) (GROUP_CONCAT(?valuelabel; separator=" // ") AS ?value) WHERE {     
 	  BIND("Findspot" AS ?description)
-	  wd:${ q } wdt:P695 ?value .
-	  ?value rdfs:label ?valueLabel .
+	  wd:${ q } wdt:P695 ?valueurl .
+	  ?valueurl rdfs:label ?valueLabel .
 	  FILTER(lang(?valueLabel)="en")
     }GROUP BY ?description ORDER BY ?valuelabel }  
   }UNION 
