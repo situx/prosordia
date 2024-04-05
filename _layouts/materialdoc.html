@@ -68,7 +68,7 @@ SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiod
   BIND(wd:${ q } AS ?fgproject)
   ?document wdt:P401 ?material .
   {?document wdt:P2 wd:Q10671}UNION{
-	?document wdt:P2 wd:Q11208 .
+	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
   ?document rdfs:label ?documentLabel .
   ?fgproject rdfs:label ?fgprojectLabel .
