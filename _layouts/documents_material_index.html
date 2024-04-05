@@ -11,7 +11,7 @@ WITH {
   SELECT ?material (COUNT(*) AS ?number_of_docs) WHERE {
     ?name wdt:P401 ?material .
     {?name wdt:P2 wd:Q10671}UNION{
-	?name wdt:P2 wd:Q11208 .
+	?name wdt:P2/wdt:P2 wd:Q11208 .
     }
   }
   GROUP BY ?material
