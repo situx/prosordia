@@ -57,14 +57,15 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
 
  $(document).ready(function() {
      sparqlToDataTable(languagesSparql, "#languages",
-	 {'linkPrefixes': {'author': '../individual'}});
+	 {'pBar':"progressbar",
+	 'pBarLabel':"progress-label",'linkPrefixes': {'author': '../individual'}});
  });
 
 </script>
 
 <div class="languages">
   <h1>Documents by measurements</h1>
-
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
   <table class="table table-hover" id="languages"></table>
   
 </div>
