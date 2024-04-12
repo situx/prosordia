@@ -22,7 +22,7 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
 	?doc wdt:P1091 ?volume .
 	}
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
+}ORDER BY ?docLabel
   `
 
  $(document).ready(function() {
