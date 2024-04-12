@@ -1,0 +1,53 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+SELECT
+  ?number_of_docs
+  ?area ?width ?height ?thickness ?volume
+WITH {
+  SELECT ?area ?width ?height ?thickness ?volume (COUNT(*) AS ?number_of_docs) WHERE {
+    ?name wdt:P1020 ?area .
+    {?name wdt:P2 wd:Q10671}UNION{
+	?name wdt:P2 wd:Q11208 .
+    }
+	OPTIONAL {
+	?name wdt:P60 ?width .
+	}
+	OPTIONAL {
+    ?name wdt:P59 ?height .
+	}
+    OPTIONAL {
+    ?name wdt:P61 ?thickness .
+	}
+	OPTIONAL {
+	?name wdt:P1091 ?volume .
+	}
+  }
+  GROUP BY ?area ?width ?height ?thickness ?volume
+} AS %languages
+WHERE {
+  INCLUDE %languages
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY DESC(?number_of_docs)
+  `
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+	 {'linkPrefixes': {'author': '../individual'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Documents by area</h1>
+
+  <table class="table table-hover" id="languages"></table>
+  
+</div>
+
+
+
