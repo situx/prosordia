@@ -33,7 +33,7 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
     FILTER(lang(?heightUnit)="en")
     BIND(CONCAT(STR(?heightt)," ",STR(?heightUnit)) AS ?height)
 	}
-    #OPTIONAL {
+    OPTIONAL {
     ?doc p:P61 ?thickness_stat .
     ?thickness_stat psv:P61 ?thickness_node .
     ?thickness_node wikibase:quantityAmount ?thicknesss .
@@ -41,7 +41,7 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
     ?thicknessUnitt rdfs:label ?thicknessUnit .
     FILTER(lang(?thicknessUnit)="en")
     BIND(CONCAT(STR(?thicknesss)," ",STR(?thicknessUnit)) AS ?thickness)
-	#}
+	}
 	OPTIONAL {
     ?doc p:P1091 ?volume_stat .
     ?volume_stat psv:P1091 ?volume_node .
