@@ -196,9 +196,9 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				for(let i = 0; i < urls.length; i++){
 					res+='<a target="_blank"'
 					if(typeof(h)!=="undefined" && urls[i].includes(h)){
-						colval+=' style="color:red"'
+						res+=' style="color:red"'
 					}
-					res+=" href=\""+urls[i]+"\" target=\"_blank\">"+labs[i]+"</a> "+sepchar+" "
+					res+=" href=\""+urls[i]+"\">"+labs[i]+"</a> "+sepchar+" "
 				}
 				res=res.substring(0,res.length-sepchar.length-2)
 				convertedRow[key]=res
@@ -228,7 +228,11 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 					labs=data[i][key].split(sepchar)	
 					res=""
 					for(let i = 0; i < urls.length; i++){
-						res+="<a href=\""+urls[i]+"\" target=\"_blank\">"+labs[i]+"</a> "+sepchar+" "
+						res+='<a target="_blank"'
+						if(typeof(h)!=="undefined" && urls[i].includes(h)){
+							res+=' style="color:red"'
+						}
+						res+=" href=\""+urls[i]+"\">"+labs[i]+"</a> "+sepchar+" "
 					}
 					console.log("THERES: "+res)
 					res=res.substring(0,res.length-sepchar.length-2)
