@@ -219,7 +219,12 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				console.log(data[i][key + 'Url'])
 				console.log(linkcount)
 				if(linkcount==1){
-					convertedRow[key] = '<a target="_blank\" href="' +(linkPrefixes[key] || "")+ data[i][key + 'Url'] +'">' + data[i][key] + '</a>';
+					temp = '<a target="_blank\"'
+					if(typeof(h)!=="undefined" && urls[i].includes(h)){
+						temp+=' style="color:red"'
+					}
+					temp+=' href="' +(linkPrefixes[key] || "")+ data[i][key + 'Url'] +'">' + data[i][key] + '</a>';
+					convertedRow[key]=temp
 				}else if(linkcount>1){
 					console.log(data[i][key + 'Url'])
 					console.log(linkcount)
