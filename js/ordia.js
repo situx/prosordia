@@ -165,7 +165,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				temp = '<a href="' +
 				(linkPrefixes[key] || "") + 
 				addParamsToLink(detectCorrectParameter(data[i][key].substr(36)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:""))+'"'
-				if(typeof(h)!=="undefined" && urls[i].includes(h)){
+				if(typeof(h)!=="undefined" && data[i][key].includes(h)){
 					temp+=' style="color:red"'
 				}
 				temp+='>' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</a>';
@@ -220,7 +220,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				console.log(linkcount)
 				if(linkcount==1){
 					temp = '<a target="_blank\"'
-					if(typeof(h)!=="undefined" && urls[i].includes(h)){
+					if(typeof(h)!=="undefined" && data[i][key + 'Url'].includes(h)){
 						temp+=' style="color:red"'
 					}
 					temp+=' href="' +(linkPrefixes[key] || "")+ data[i][key + 'Url'] +'">' + data[i][key] + '</a>';
