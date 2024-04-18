@@ -101,6 +101,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
     }
     for (var i = 0 ; i < data.length ; i++) {
 	var convertedRow = {};
+	console.log("H: "+h)
 	for (var key in data[i]) {
 		if(key.includes("_cols")){
 			splitted=data[i][key].split("###")
