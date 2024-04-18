@@ -130,7 +130,11 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				for(item of data[i][key].split(" ")){
 					//console.log(counter+" "+linkarray.length)
 					if(counter<linkarray.length){
-						colval+='<a target="_blank" href="'+linkarray[counter]+'"><img loading="lazy" src="' + item.replace("http:","https:") + '" height="50"></a>&nbsp;'
+						colval+='<a target="_blank"'
+						if(typeof(h)!=="undefined" && linkarray[counter].includes(h)){
+							colval+=' style="color:red"'
+						}
+						colval+=' href="'+linkarray[counter]+'"><img loading="lazy" src="' + item.replace("http:","https:") + '" height="50"></a>&nbsp;'
 					}else{
 						colval+='<img loading="lazy" src="' + item.replace("http:","https:") + '" height="50">&nbsp;'
 					}
@@ -139,7 +143,11 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				convertedRow[key]=colval
 			}else{
 				if(linkarray.length==1){
-					convertedRow[key] = '<a target="_blank" href="'+linkarray[0]+'"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
+					colval+='<a target="_blank"'
+					if(typeof(h)!=="undefined" && linkarray[0].includes(h)){
+						colval+=' style="color:red"'
+					}
+					convertedRow[key] = ' href="'+linkarray[0]+'"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
 				}else{
 					convertedRow[key] = '<img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50">';
 				}
@@ -153,10 +161,14 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 			if(linkcount==0){
 				convertedRow[key] = '<span>' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</span>';
 			}else if(linkcount==1){
-				convertedRow[key] = '<a href="' +
+				temp = '<a href="' +
 				(linkPrefixes[key] || "") + 
-				addParamsToLink(detectCorrectParameter(data[i][key].substr(36)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")) +
-				'">' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</a>';
+				addParamsToLink(detectCorrectParameter(data[i][key].substr(36)),key,linkParams,data[i][key+'Label']+((key+'Label2' in data[i])?" "+data[i][key+'Label2']:""))+'"'
+				if(typeof(h)!=="undefined" && urls[i].includes(h)){
+					temp+=' style="color:red"'
+				}
+				temp+='>' + data[i][key + 'Label'] +((key+'Label2' in data[i])?" "+data[i][key+'Label2']:"")+ '</a>';
+				convertedRow[key]=temp
 			}else if(linkcount>1){
 				console.log(data[i][key])
 				console.log(linkcount)
@@ -181,7 +193,11 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				labs=data[i][key+'Label'].split(sepchar)	
 				res=""
 				for(let i = 0; i < urls.length; i++){
-					res+="<a href=\""+urls[i]+"\" target=\"_blank\">"+labs[i]+"</a> "+sepchar+" "
+					res+='<a target="_blank"'
+					if(typeof(h)!=="undefined" && urls[i].includes(h)){
+						colval+=' style="color:red"'
+					}
+					res+=" href=\""+urls[i]+"\" target=\"_blank\">"+labs[i]+"</a> "+sepchar+" "
 				}
 				res=res.substring(0,res.length-sepchar.length-2)
 				convertedRow[key]=res
@@ -207,22 +223,6 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 					console.log(data[i][key + 'Url'])
 					console.log(linkcount)
 					sepchar=" // "
-					/*try{
-						if(data[i][key + 'Url'].includes("http")){
-							secondocc=data[i][key + 'Url'].indexOf("http",7)
-						}else if(data[i][key + 'Url'].includes("../")){
-							secondocc=data[i][key + 'Url'].indexOf("../",4)
-						}else{
-							secondocc=data[i][key + 'Url'].indexOf(" ")
-						}
-						firsturl=data[i][key + 'Url'].substring(0,secondocc)
-						var onlyNumbers = firsturl.replace(/\D/g,'');
-						var lastNumber = onlyNumbers.substring(onlyNumbers.length - 1);
-						var lastNumberIndex=firsturl.lastIndexOf(lastNumber)
-						sepchar=data[i][key + 'Url'].substring(lastNumberIndex+1,secondocc)
-					}catch(err){
-						console.log("ERROR: "+err)
-					}*/
 					urls=data[i][key + 'Url'].split(sepchar)
 					labs=data[i][key].split(sepchar)	
 					res=""
