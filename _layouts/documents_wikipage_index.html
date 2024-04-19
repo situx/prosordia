@@ -4,11 +4,21 @@ layout: base
 
 <script type="text/javascript">
     languagesSparql = `
-SELECT ?doc ?docLabel ?docDescription ?transcript WHERE { 
+SELECT ?doc ?docLabel ?docDescription ?language ?timeperiod ?transcript WHERE { 
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
     ?doc wdt:P251 ?transcript .
+	OPTIONAL {
+		?document wdt:P18 ?language .
+		?language rdfs:label ?languageLabel .
+		FILTER(lang(?languageLabel)="en")
+	}
+	OPTIONAL {
+		?document wdt:P853 ?timeperiod .
+		?timeperiod rdfs:label ?timeperiodLabel .
+		FILTER(lang(?timeperiodLabel)="en")
+	}
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }ORDER BY ?docLabel
   `
