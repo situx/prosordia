@@ -8,7 +8,7 @@ SELECT ?doc ?docLabel ?docDescription ?transcript WHERE {
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
-    ?doc p:P251 ?transcript .
+    ?doc wdt:P251 ?transcript .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }ORDER BY ?docLabel
   `
