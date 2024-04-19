@@ -85,7 +85,7 @@ SELECT ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiod
     FILTER(lang(?timeperiodLabel)="en")
   }
   OPTIONAL {
-     ?doc wdt:P251 ?transcript .
+     ?document wdt:P251 ?transcript .
   }
 }
 ORDER BY ?documentLabel
