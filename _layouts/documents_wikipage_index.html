@@ -10,12 +10,12 @@ SELECT ?doc ?docLabel ?docDescription ?language ?timeperiod ?transcript WHERE {
     }
     ?doc wdt:P251 ?transcript .
 	OPTIONAL {
-		?document wdt:P18 ?language .
+		?doc wdt:P18 ?language .
 		?language rdfs:label ?languageLabel .
 		FILTER(lang(?languageLabel)="en")
 	}
 	OPTIONAL {
-		?document wdt:P853 ?timeperiod .
+		?doc wdt:P853 ?timeperiod .
 		?timeperiod rdfs:label ?timeperiodLabel .
 		FILTER(lang(?timeperiodLabel)="en")
 	}
