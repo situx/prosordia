@@ -154,7 +154,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 				}
 							
 			}
-	    } else if (key + 'Label' in data[i]) {
+	    } else if (key + 'Label' in data[i]) {		
 			var linkcount = (data[i][key].match(/http|\.\.\//g) || []).length;
 			sepchar=" // "
 			console.log(data[i][key])
@@ -258,7 +258,12 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 		    $("<div>").text(data[i][key]).html() + '</a>';
 
 	    } else {
-		convertedRow[key] = data[i][key];
+			if(data[i][key].startsWith("http") || data[i][key].startsWith("<http")){
+				convertedRow[key]+="<a href=\""+data[i][key].replace("<","").replace(">","")+"\" target=\"_blank\">"+data[i][key].replace("<","").replace(">","")+"</a>"
+			}else{
+				convertedRow[key] = data[i][key];
+			}
+		
 	    }
 	}
 	convertedData.push(convertedRow);
