@@ -259,7 +259,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 
 	    } else {
 			if(data[i][key].startsWith("http") || data[i][key].startsWith("<http")){
-				convertedRow[key]+="<a href=\""+data[i][key].replace("<","").replace(">","")+"\" target=\"_blank\">"+data[i][key].replace("<","").replace(">","")+"</a>"
+				convertedRow[key]="<a href=\""+data[i][key].replace("<","").replace(">","")+"\" target=\"_blank\">"+data[i][key].replace("<","").replace(">","")+"</a>"
 			}else{
 				convertedRow[key] = data[i][key];
 			}
