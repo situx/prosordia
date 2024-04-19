@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
     languagesSparql = `
-SELECT ?doc ?docLabel ?docDescription ?language ?timeperiod ?transcript WHERE { 
+SELECT ?doc ?docLabel ?docDescription ?language ?languageLabel ?timeperiod ?timeperiodLabel ?transcript WHERE { 
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
