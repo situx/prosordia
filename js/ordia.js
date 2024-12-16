@@ -470,6 +470,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    ordering: true,
 	    order: [], 
 	    paging: paging,
+		pagingType: "input",
 	    sDom: sDom,
 	});
 
