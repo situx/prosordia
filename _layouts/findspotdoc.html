@@ -64,22 +64,22 @@ ORDER BY ?order
  lexemesSparql = `
 # tool: ordia
 # title: List of lexemes for a language
-SELECT ?document ?documentLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?altLabel) ?language ?languageLabel ?timeperiod ?timeperiodLabel ?transcript WHERE {
+SELECT ?document ?documentLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?language ?languageLabel ?timeperiod ?timeperiodLabel ?transcript WHERE {
   BIND(wd:${ q } AS ?findspot)
   ?document wdt:P695 ?findspot .
   {?document wdt:P2 wd:Q10671}UNION{
 	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
   ?document rdfs:label ?documentLabel .
-  OPTIONAL {
-    ?document skos:altLabel ?altLabell .
-    FILTER(lang(?altLabell)="en")
-  }
   ?fgproject rdfs:label ?fgprojectLabel .
   FILTER(lang(?documentLabel)="en")
   ?findspot rdfs:label ?findspotLabel .
   FILTER(lang(?documentLabel)="en")
   FILTER(lang(?findspotLabel)="en")
+  OPTIONAL {
+    ?document skos:altLabel ?altLabell .
+    FILTER(lang(?altLabell)="en")
+  }
   OPTIONAL {
     ?document wdt:P18 ?language .
     ?language rdfs:label ?languageLabel .
