@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
     languagesSparql = `
-SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COUNT(?pdf) as ?pdfs) WHERE { 
+SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COUNT(?pdf) as ?pdfs) ?publink WHERE { 
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
@@ -24,8 +24,11 @@ SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?A
     OPTIONAL {
      ?doc wdt:P146 ?pdf .
     }
+	OPTIONAL {
+     ?doc wdt:P138 ?publink .
+    }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}GROUP BY ?doc ?docLabel ?docDescription ?images
+}GROUP BY ?doc ?docLabel ?docDescription ?images ?publink
 ORDER BY ?docLabel
   `
 
