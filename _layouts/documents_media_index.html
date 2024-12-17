@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
     languagesSparql = `
-SELECT ?doc ?docLabel ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COUNT(?pdf) as ?pdfs) WHERE { 
+SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COUNT(?pdf) as ?pdfs) WHERE { 
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
@@ -15,6 +15,10 @@ SELECT ?doc ?docLabel ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COU
       ?doc wdt:P188 ?image .
     }GROUP BY ?doc }
     OPTIONAL {
+    ?doc skos:altLabel ?altLabell .
+    FILTER(lang(?altLabell)="en")
+    }
+	OPTIONAL {
      ?doc wdt:P1034 ?3dmodel .
     }
     OPTIONAL {
