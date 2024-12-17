@@ -92,6 +92,7 @@ SELECT ?document ?documentLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" /
      ?document wdt:P251 ?transcript .
   }
 }
+GROUP BY ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel ?transcript
 ORDER BY ?documentLabel
 `
 
