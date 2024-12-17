@@ -71,14 +71,12 @@ SELECT ?document ?documentLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" /
 	?document wdt:P2/wdt:P2 wd:Q11208 .
     }
   ?document rdfs:label ?documentLabel .
-  ?fgproject rdfs:label ?fgprojectLabel .
-  FILTER(lang(?documentLabel)="en")
   ?findspot rdfs:label ?findspotLabel .
   FILTER(lang(?documentLabel)="en")
   FILTER(lang(?findspotLabel)="en")
   OPTIONAL {
     ?document skos:altLabel ?altLabell .
-    FILTER(lang(?altLabell)="en")
+	FILTER(lang(?altLabell)="en")
   }
   OPTIONAL {
     ?document wdt:P18 ?language .
@@ -94,7 +92,6 @@ SELECT ?document ?documentLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" /
      ?document wdt:P251 ?transcript .
   }
 }
-GROUP BY ?document ?documentLabel ?language ?languageLabel ?timeperiod ?timeperiodLabel ?transcript
 ORDER BY ?documentLabel
 `
 
@@ -138,7 +135,6 @@ ORDER BY ?documentLabel
 
 
 </div>
-
 
 
 
