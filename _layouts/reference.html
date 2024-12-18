@@ -108,6 +108,19 @@ WHERE {
     BIND("3d model" AS ?description)
     ?name wdt:P1034 ?value_Url .
     BIND(?value_Url AS ?valueLabel)
+  }UNION 
+  {
+    BIND(11 AS ?order)
+    BIND("Width" AS ?description)
+	?name p:P60 ?width_stat .
+    ?width_stat psv:P60 ?width_node .
+    ?width_node wikibase:quantityAmount ?widthh .
+    ?width_node wikibase:quantityUnit ?widthUnitt .
+    ?widthUnitt rdfs:label ?widthUnit .
+    FILTER(lang(?widthUnit)="en")
+    BIND(CONCAT(STR(?widthh)," ",STR(?widthUnit)) AS ?width)
+	BIND(?width AS ?value)
+    BIND(?width AS ?valueLabel)
   }
 }
 ORDER BY ?order
@@ -199,7 +212,7 @@ WHERE {
 
 <div class="reference-entry">
   
-  <h1>Reference: ${ q }</h1>
+  <h1>Reference: ${qLabel} (${ q })</h1>
 
   <p>
     <a title="Back"
