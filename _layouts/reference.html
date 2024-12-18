@@ -110,7 +110,7 @@ WHERE {
     BIND(?value_Url AS ?valueLabel)
   }UNION 
   {
-    BIND(11 AS ?order)
+    BIND(12 AS ?order)
     BIND("Width" AS ?description)
 	?name p:P60 ?width_stat .
     ?width_stat psv:P60 ?width_node .
@@ -121,6 +121,58 @@ WHERE {
     BIND(CONCAT(STR(?widthh)," ",STR(?widthUnit)) AS ?width)
 	BIND(?width AS ?value)
     BIND(?width AS ?valueLabel)
+  }UNION 
+  {
+    BIND(13 AS ?order)
+    BIND("Height" AS ?description)
+	?name p:P59 ?height_stat .
+    ?height_stat psv:P59 ?height_node .
+    ?height_node wikibase:quantityAmount ?heighth .
+    ?height_node wikibase:quantityUnit ?heightUnitt .
+    ?heightUnitt rdfs:label ?heightUnit .
+    FILTER(lang(?heightUnit)="en")
+    BIND(CONCAT(STR(?heighth)," ",STR(?heightUnit)) AS ?height)
+	BIND(?height AS ?value)
+    BIND(?height AS ?valueLabel)
+  }UNION 
+  {
+    BIND(14 AS ?order)
+    BIND("Thickness" AS ?description)
+	?name p:P61 ?thick_stat .
+    ?thick_stat psv:P61 ?thick_node .
+    ?thick_node wikibase:quantityAmount ?thickh .
+    ?thick_node wikibase:quantityUnit ?thickUnitt .
+    ?thickUnitt rdfs:label ?thickUnit .
+    FILTER(lang(?thickUnit)="en")
+    BIND(CONCAT(STR(?thickh)," ",STR(?thickUnit)) AS ?thick)
+	BIND(?thick AS ?value)
+    BIND(?thick AS ?valueLabel)
+  }UNION 
+  {
+    BIND(15 AS ?order)
+    BIND("Area" AS ?description)
+	?name p:P1020 ?area_stat .
+    ?area_stat psv:P1020 ?area_node .
+    ?area_node wikibase:quantityAmount ?areah .
+    ?area_node wikibase:quantityUnit ?areaUnitt .
+    ?areaUnitt rdfs:label ?areaUnit .
+    FILTER(lang(?areaUnit)="en")
+    BIND(CONCAT(STR(?areah)," ",STR(?areaUnit)) AS ?area)
+	BIND(?area AS ?value)
+    BIND(?area AS ?valueLabel)
+  }UNION 
+  {
+    BIND(16 AS ?order)
+    BIND("Volume" AS ?description)
+	?name p:P1091 ?volume_stat .
+    ?volume_stat psv:P1091 ?volume_node .
+    ?volume_node wikibase:quantityAmount ?volumeh .
+    ?volume_node wikibase:quantityUnit ?volumeUnitt .
+    ?volumeUnitt rdfs:label ?volumeUnit .
+    FILTER(lang(?volumeUnit)="en")
+    BIND(CONCAT(STR(?volumeh)," ",STR(?volumeUnit)) AS ?volume)
+	BIND(?volume AS ?value)
+    BIND(?volume AS ?valueLabel)
   }
 }
 ORDER BY ?order
@@ -212,7 +264,7 @@ WHERE {
 
 <div class="reference-entry">
   
-  <h1>Reference: ${qLabel} (${ q })</h1>
+  <h1>Reference: ${ qLabel } (${ q })</h1>
 
   <p>
     <a title="Back"
