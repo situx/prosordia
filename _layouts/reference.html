@@ -173,7 +173,12 @@ WHERE {
     BIND(CONCAT(STR(?volumeh)," ",STR(?volumeUnit)) AS ?volume)
 	BIND(?volume AS ?value)
     BIND(?volume AS ?valueLabel)
-  }
+  } UNION {
+    BIND(17 AS ?order)
+    BIND("Present holding" AS ?description)
+    ?name wdt:P329 ?value_Url .
+    BIND(?value_Url AS ?valueLabel)
+  } 
 }
 ORDER BY ?order
 `
