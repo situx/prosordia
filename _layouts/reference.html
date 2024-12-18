@@ -177,7 +177,8 @@ WHERE {
     BIND(17 AS ?order)
     BIND("Present holding" AS ?description)
     ?name wdt:P329 ?value_Url .
-    BIND(?value_Url AS ?valueLabel)
+    ?value_Url rdfs:label ?valueLabel .
+    FILTER(lang(?valueLabel)="en")
   } 
 }
 ORDER BY ?order
