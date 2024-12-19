@@ -4,7 +4,7 @@ layout: base
 
 <script type="text/javascript">
     languagesSparql = `
-SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WHERE { 
+SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?docDescription ?area ?width ?height ?thickness ?volume WHERE { 
     {?doc wdt:P2 wd:Q10671}UNION{
 	?doc wdt:P2/wdt:P2 wd:Q11208 .
     }
@@ -15,6 +15,10 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
     ?areaUnitt rdfs:label ?areaUnit .
     FILTER(lang(?areaUnit)="en")
     BIND(CONCAT(STR(?areaa)," ",STR(?areaUnit)) AS ?area) 
+	OPTIONAL {
+    ?doc skos:altLabel ?altLabell .
+    FILTER(lang(?altLabell)="en")
+    }
 	OPTIONAL {
     ?doc p:P60 ?width_stat .
     ?width_stat psv:P60 ?width_node .
@@ -52,7 +56,9 @@ SELECT ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume WH
     BIND(CONCAT(STR(?volumee)," ",STR(?volumeUnit)) AS ?volume)
 	}
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}ORDER BY ?docLabel
+}
+GROUP BY ?doc ?docLabel ?docDescription ?area ?width ?height ?thickness ?volume
+ORDER BY ?docLabel
   `
 
  $(document).ready(function() {
