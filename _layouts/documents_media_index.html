@@ -1,0 +1,51 @@
+---
+layout: base
+---
+
+<script type="text/javascript">
+    languagesSparql = `
+SELECT ?doc ?docLabel (GROUP_CONCAT(DISTINCT ?altLabell; separator=" // ") as ?AlsoKnownAs) ?docDescription ?images (COUNT(?3dmodel) as ?3models) (COUNT(?pdf) as ?pdfs) ?publink WHERE { 
+    {?doc wdt:P2 wd:Q10671}UNION{
+	?doc wdt:P2/wdt:P2 wd:Q11208 .
+    }
+    { SELECT ?doc (COUNT(?image) as ?images) WHERE {
+          {?doc wdt:P2 wd:Q10671}UNION{
+	?doc wdt:P2/wdt:P2 wd:Q11208 .
+    }
+      ?doc wdt:P188 ?image .
+    }GROUP BY ?doc }
+    OPTIONAL {
+    ?doc skos:altLabel ?altLabell .
+    FILTER(lang(?altLabell)="en")
+    }
+	OPTIONAL {
+     ?doc wdt:P1034 ?3dmodel .
+    }
+    OPTIONAL {
+     ?doc wdt:P146 ?pdf .
+    }
+	OPTIONAL {
+     ?doc wdt:P138 ?publink .
+    }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}GROUP BY ?doc ?docLabel ?docDescription ?images ?publink
+ORDER BY ?docLabel
+  `
+
+ $(document).ready(function() {
+     sparqlToDataTable(languagesSparql, "#languages",
+	 {'pBar':"progressbar",
+	 'pBarLabel':"progress-label",'linkPrefixes': {'doc': '../reference'}});
+ });
+
+</script>
+
+<div class="languages">
+  <h1>Documents by media</h1>
+  <div id="progressbar"><span class="progress-label" id="progress-label">Loading...</span></div>
+  <table class="table table-hover" id="languages"></table>
+  
+</div>
+
+
+
