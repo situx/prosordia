@@ -2,7 +2,7 @@
     <form class="form-inline" action="{{ url_for('app.show_search') }}">
 	<div class="input-group">
             <input type="text" class="form-control"
-		   name="q" id="searchterm" value="{{ query }}"
+		   name="q" id="searchterm" value="{{ site.baseurl }}/search"
 		   placeholder="Search after lemma or form"/>
             <span class="input-group-btn">
 		<button class="btn btn-primary" type="submit">
