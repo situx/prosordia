@@ -446,7 +446,7 @@ function sparqlToDataTable(sparql, element, options={}) {
         .on( 'init.dt', function () {
             //console.log( 'Loaded' );
            //Here hide the loader.
-           $("#MessageContainer").html("Loding completed!");
+           $("#MessageContainer").html("Loading completed!");
 		   	if(pBar!=""){
 				$('#'+pBar).progressbar("destroy")
 				$('#'+pBarLabel).html("")
@@ -479,7 +479,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
     }, "json");
-
+	return convertedData
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {

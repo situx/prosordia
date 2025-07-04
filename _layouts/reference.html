@@ -247,18 +247,19 @@ WHERE {
 `
 
 
-  $(document).ready(function() {
+$(document).ready(function() {
       sparqlToDataTable(lexemesSparql, "#lexemes",
 			options={
 			    'linkPrefixes': {
 				'lexeme': '../l',
 			    }});
-      sparqlToDataTable(imagesSparql, "#images",
+      convdata=sparqlToDataTable(imagesSparql, "#images",
 			options={
 			    'linkPrefixes': {
 				'lexeme': '../l',
 				'form': '../lf', 
-			    }});
+			}});
+	  console.log(convdata)
 	  sparqlToDataTable(nameSparql, "#name",
 		options={
 			'linkPrefixes': {
