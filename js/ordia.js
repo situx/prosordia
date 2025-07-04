@@ -322,6 +322,7 @@ function sparqlToDataTable(sparql, element, options={}) {
     var paging = (typeof options.paging === 'undefined') ? true : options.paging;
     var sDom = (typeof options.sDom === 'undefined') ? 'lfrtip' : options.sDom;
 	var pBar = (typeof options.pBar === 'undefined') ? '' : options.pBar;
+	var callback = (typeof options.callback === 'undefined') ? '' : options.callback;
 	var pBarLabel = (typeof options.pBarLabel === 'undefined') ? '' : options.pBarLabel;
 	var sepcharmap=(typeof options.sepcharmap === 'undefined') ? {} : options.sepcharmap;
 	if(pBar!=""){
@@ -478,7 +479,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    '<caption><a href="https://database.factgrid.de/query#' + 
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
-	if("fc" in options["callback"]){
+	if("fc" in callback){
 		createFatCross(convertedData)
 	}
     }, "json");
