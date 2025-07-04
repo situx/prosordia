@@ -258,6 +258,7 @@ $(document).ready(function() {
 			    'linkPrefixes': {
 				'lexeme': '../l',
 				'form': '../lf', 
+				"callback":["fc"]
 			}});
 	  sparqlToDataTable(nameSparql, "#name",
 		options={
@@ -267,20 +268,23 @@ $(document).ready(function() {
   });
   
 </script>
+
+
+<div class="reference-entry">
 <dialog id="fcdialog">
 <h3>FatCross for ${ qLabel } (${ q })</h3>
 <table><tr><td></td><td><img id="topimg" src=""/></td><td></td></tr>
 <tr><td><img id="leftimg" src=""/></td><td><img id="frontimg" src=""/></td><td><img id="rightimg" src=""/></td></tr>
 <tr><td></td><td><img id="bottomimg" src=""/></td><td></td></tr>
 <tr><td></td><td><img id="backimg" src=""/></td><td></td></tr>
-<button id="closeButton">Close</button>
-</dialog>
+</table>
+<button id="closeButtonFC">Close</button>
+</dialog>  
+
 <dialog id="3ddialog">
 <h3>3D View for ${ qLabel } (${ q })</h3>
-
+<button id="closeButton3D">Close</button>
 </dialog>
-<div class="reference-entry">
-  
   <h1>Reference: ${ qLabel } (${ q })</h1>
 
   <p>
