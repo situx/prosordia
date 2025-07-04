@@ -317,6 +317,7 @@ function sparqlDataToSimpleData(response) {
 
 function sparqlToDataTable(sparql, element, options={}) {
     // Options: linkPrefixes={}, paging=true
+	console.log(options)
     var linkPrefixes = (typeof options.linkPrefixes === 'undefined') ? {} : options.linkPrefixes;
 	var linkParams = (typeof options.linkParams === 'undefined') ? {} : options.linkParams;
     var paging = (typeof options.paging === 'undefined') ? true : options.paging;
