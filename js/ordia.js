@@ -490,27 +490,36 @@ function sparqlToDataTable(sparql, element, options={}) {
 
 function createFatCross(convertedData){
 	console.log(convertedData)
+	var found=false;
 	for(dat of convertedData.data){
 		if(dat["surface"].includes("Front")){
 			$('#frontimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			found=true
 		}
 		if(dat["surface"].includes("Top")){
 			$('#topimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			found=true
 		}
 		if(dat["surface"].includes("Bottom")){
 			$('#bottomimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			found=true
 		}
 		if(dat["surface"].includes("Back")){
 			$('#backimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			found=true
 		}
 		if(dat["surface"].includes("Left")){
 			$('#leftimg').html(dat["image"].replace("height=\"50\"","style=\"width:13%\""));
+			found=true
 		}
 		if(dat["surface"].includes("Right")){
 			$('#rightimg').html(dat["image"].replace("height=\"50\"","style=\"width:13%\""));
+			found=true
 		}
 	}
-	$('#showFCButton').css("visibility", "visible");
+	if(found){
+		$('#showFCButton').css("visibility", "visible");
+	}
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
