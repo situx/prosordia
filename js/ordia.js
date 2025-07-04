@@ -492,22 +492,22 @@ function createFatCross(convertedData){
 	console.log(convertedData)
 	for(dat of convertedData.data){
 		if(dat["surface"].includes("Front")){
-			$('#frontimg').html(data["image"]);
+			$('#frontimg').html(dat["image"]);
 		}
 		if(dat["surface"].includes("Top")){
-			$('#topimg').html(data["image"]);
+			$('#topimg').html(dat["image"]);
 		}
 		if(dat["surface"].includes("Bottom")){
-			$('#bottomimg').html(data["image"]);
+			$('#bottomimg').html(dat["image"]);
 		}
 		if(dat["surface"].includes("Back")){
-			$('#backimg').html(data["image"]);
+			$('#backimg').html(dat["image"]);
 		}
 		if(dat["surface"].includes("Left")){
-			$('#leftimg').html(data["image"]);
+			$('#leftimg').html(dat["image"]);
 		}
 		if(dat["surface"].includes("Right")){
-			$('#rightimg').html(data["image"]);
+			$('#rightimg').html(dat["image"]);
 		}
 	}
 	$('#showFCButton').css({})
