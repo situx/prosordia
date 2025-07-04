@@ -490,23 +490,23 @@ function sparqlToDataTable(sparql, element, options={}) {
 
 function createFatCross(convertedData){
 	console.log(convertedData)
-	for(dat in convertedData.data){
-		if(data["surface"].includes("Front")){
+	for(dat of convertedData.data){
+		if(dat["surface"].includes("Front")){
 			$('#frontimg').html(data["image"]);
 		}
-		if(data["surface"].includes("Top")){
+		if(dat["surface"].includes("Top")){
 			$('#topimg').html(data["image"]);
 		}
-		if(data["surface"].includes("Bottom")){
+		if(dat["surface"].includes("Bottom")){
 			$('#bottomimg').html(data["image"]);
 		}
-		if(data["surface"].includes("Back")){
+		if(dat["surface"].includes("Back")){
 			$('#backimg').html(data["image"]);
 		}
-		if(data["surface"].includes("Left")){
+		if(dat["surface"].includes("Left")){
 			$('#leftimg').html(data["image"]);
 		}
-		if(data["surface"].includes("Right")){
+		if(dat["surface"].includes("Right")){
 			$('#rightimg').html(data["image"]);
 		}
 	}
