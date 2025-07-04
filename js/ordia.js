@@ -480,7 +480,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    '<caption><a href="https://database.factgrid.de/query#' + 
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
-	console.log(callback)
+	//console.log(callback)
 	if(callback.includes("fc")){
 		createFatCross(convertedData)
 	}
@@ -490,6 +490,27 @@ function sparqlToDataTable(sparql, element, options={}) {
 
 function createFatCross(convertedData){
 	console.log(convertedData)
+	for(dat in convertedData.data){
+		if(data["surface"].includes("Front")){
+			$('#frontimg').html(data["image"]);
+		}
+		if(data["surface"].includes("Top")){
+			$('#topimg').html(data["image"]);
+		}
+		if(data["surface"].includes("Bottom")){
+			$('#bottomimg').html(data["image"]);
+		}
+		if(data["surface"].includes("Back")){
+			$('#backimg').html(data["image"]);
+		}
+		if(data["surface"].includes("Left")){
+			$('#leftimg').html(data["image"]);
+		}
+		if(data["surface"].includes("Right")){
+			$('#rightimg').html(data["image"]);
+		}
+	}
+	$('#showFCButton').css({})
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
