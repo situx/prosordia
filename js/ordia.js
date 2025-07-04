@@ -478,8 +478,15 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    '<caption><a href="https://database.factgrid.de/query#' + 
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
+	if("fc" in options["callback"]){
+		createFatCross(convertedData)
+	}
     }, "json");
 	
+}
+
+function createFeatCross(convertedData){
+	console.log(convertedData)
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
