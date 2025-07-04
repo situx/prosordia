@@ -255,10 +255,10 @@ $(document).ready(function() {
 			    }});
       sparqlToDataTable(imagesSparql, "#images",
 			options={
+				"callback":["fc"],
 			    'linkPrefixes': {
 				'lexeme': '../l',
-				'form': '../lf', 
-				"callback":["fc"]
+				'form': '../lf'
 			}});
 	  sparqlToDataTable(nameSparql, "#name",
 		options={
