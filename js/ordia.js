@@ -487,7 +487,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	
 }
 
-function createFeatCross(convertedData){
+function createFatCross(convertedData){
 	console.log(convertedData)
 }
 
