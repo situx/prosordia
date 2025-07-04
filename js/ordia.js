@@ -492,22 +492,22 @@ function createFatCross(convertedData){
 	console.log(convertedData)
 	for(dat of convertedData.data){
 		if(dat["surface"].includes("Front")){
-			$('#frontimg').html(dat["image"]);
+			$('#frontimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Top")){
-			$('#topimg').html(dat["image"]);
+			$('#topimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Bottom")){
-			$('#bottomimg').html(dat["image"]);
+			$('#bottomimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Back")){
-			$('#backimg').html(dat["image"]);
+			$('#backimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Left")){
-			$('#leftimg').html(dat["image"]);
+			$('#leftimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Right")){
-			$('#rightimg').html(dat["image"]);
+			$('#rightimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 	}
 	$('#showFCButton').css({})
