@@ -510,7 +510,7 @@ function createFatCross(convertedData){
 			$('#rightimg').html(dat["image"].replace("height=50","style=\"width:33%\""));
 		}
 	}
-	$('#showFCButton').style("")
+	$('#showFCButton').show()
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
