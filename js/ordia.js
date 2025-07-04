@@ -504,13 +504,13 @@ function createFatCross(convertedData){
 			$('#backimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
 		}
 		if(dat["surface"].includes("Left")){
-			$('#leftimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			$('#leftimg').html(dat["image"].replace("height=\"50\"","style=\"width:13%\""));
 		}
 		if(dat["surface"].includes("Right")){
-			$('#rightimg').html(dat["image"].replace("height=\"50\"","style=\"width:33%\""));
+			$('#rightimg').html(dat["image"].replace("height=\"50\"","style=\"width:13%\""));
 		}
 	}
-	$('#showFCButton').show()
+	$('#showFCButton').css("visibility", "visible");
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
