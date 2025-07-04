@@ -479,7 +479,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
     }, "json");
-	return convertedData
+	
 }
 
 function qToWembedderToDataTable(q, sparql, element, options={}) {
