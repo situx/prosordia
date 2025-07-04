@@ -479,6 +479,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    '<caption><a href="https://database.factgrid.de/query#' + 
 		encodeURIComponent(sparql) +	
 		'">Edit on database.factgrid.de/query/</a></caption>');
+	console.log(callback)
 	if(callback.includes("fc")){
 		createFatCross(convertedData)
 	}
