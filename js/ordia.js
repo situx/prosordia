@@ -13,6 +13,7 @@ function applyPropertyMapping(thequery,propertyMapping){
 let camera, scene, renderer,controls,axesHelper,box,center,size;
 
 function initThreeJS(domelement,url){
+	console.log("Loading: "+url)
 	const objects=new THREE.Group();
 	height=500
     width=480
