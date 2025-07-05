@@ -10,6 +10,26 @@ function applyPropertyMapping(thequery,propertyMapping){
 	return thequery
 }
 
+function toggleFullScreen2(){
+    toggleFullScreen("threejs",true)
+}
+
+function toggleFullScreen(elementid,threejs=false) {
+  if (!document.fullscreenElement) {
+    document.getElementById(elementid).requestFullscreen();
+    if(threejs){
+        var elem = document.getElementById(elementid);
+        var sceneWidth = window.innerWidth;
+        var sceneHeight = elem.offsetHeight;
+        camera.aspect = sceneWidth / sceneHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( sceneWidth, sceneHeight );
+    }
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
 let camera, scene, renderer,controls,axesHelper,box,center,size;
 
 function initThreeJS(domelement,url){
