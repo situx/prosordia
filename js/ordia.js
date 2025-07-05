@@ -86,6 +86,40 @@ function addRotationControls(box,geometryF,objects){
     });
 }
 
+function fitCameraToSelection(camera, controls, selection, fitOffset = 1.2) {
+  size = new THREE.Vector3();
+  center = new THREE.Vector3();
+  box = new THREE.Box3();
+  box.makeEmpty();
+  for(const object of selection) {
+    box.expandByObject(object);
+  }
+
+  box.getSize(size);
+  box.getCenter(center );
+
+  const maxSize = Math.max(size.x, size.y, size.z);
+  const fitHeightDistance = maxSize / (2 * Math.atan(Math.PI * camera.fov / 360));
+  const fitWidthDistance = fitHeightDistance / camera.aspect;
+  const distance = fitOffset * Math.max(fitHeightDistance, fitWidthDistance);
+
+  const direction = controls.target.clone()
+    .sub(camera.position)
+    .normalize()
+    .multiplyScalar(distance);
+
+  controls.maxDistance = distance * 10;
+  controls.target.copy(center);
+
+  camera.near = distance / 100;
+  camera.far = distance * 100;
+  camera.updateProjectionMatrix();
+
+  camera.position.copy(controls.target).sub(direction);
+
+  controls.update();
+}
+
 let camera, scene, renderer,controls,axesHelper,box,center,size;
 
 function initThreeJS(domelement,url){
@@ -121,6 +155,7 @@ function initThreeJS(domelement,url){
 		if(objects.children.length>0){
 			camera.lookAt( objects.children[0].position );
 		}
+		fitCameraToSelection(camera, controls, objects.children)
 	});
 	camera = new THREE.PerspectiveCamera(90,width / height, 0.1, 2000 );
     scene.add(new THREE.AmbientLight(0x222222));
