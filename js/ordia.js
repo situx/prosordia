@@ -525,8 +525,10 @@ function initThreeJSFromData(convertedData){
 	found=false
 	for(dat of convertedData.data){
 		if(dat["description"].includes("3d model")){
-			if(dat["value_"].endsWith(".ply")){
-				initThreeJS("threejs",dat["value"])
+			if(dat["value_"].endsWith(".ply</a>")){
+				url=dat["value_"].replace("</a>","")
+				url=url.substring(url.indexOf(">")+1)
+				initThreeJS("threejs",url)
 				found=true
 			}
 		}
