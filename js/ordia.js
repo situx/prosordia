@@ -18,7 +18,7 @@ function initThreeJS(domelement,url){
 	height=500
     width=480
 	scene = new THREE.Scene();
-	const gui = new GUI({autoPlace: false})
+	const gui = new lil.GUI;({autoPlace: false})
 	//gui.domElement.id="gui"
     $("#threejsnav").append($(gui.domElement))
 	const geometryFolder = gui.addFolder("Mesh");
