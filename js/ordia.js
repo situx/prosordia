@@ -572,6 +572,11 @@ function sparqlToDataTable(sparql, element, options={}) {
 	
 }
 
+function initThreeJSButton(){
+  $('#load3DModel').hide()
+  initThreeJS("threejs",3dmodelurl)
+}
+var 3dmodelurl=""
 function initThreeJSFromData(convertedData){
 	console.log(convertedData)
 	found=false
@@ -580,7 +585,8 @@ function initThreeJSFromData(convertedData){
 			if(dat["value_"].endsWith(".ply</a>")){
 				url=dat["value_"].replace("</a>","")
 				url=url.substring(url.indexOf(">")+1)
-				initThreeJS("threejs",url)
+				//initThreeJS("threejs",url)
+				3dmodelurl=url
 				found=true
 			}
 		}
