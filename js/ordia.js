@@ -56,6 +56,12 @@ function initThreeJS(domelement,url){
 	animate()
 }
 
+function animate() {
+    requestAnimationFrame( animate );
+    controls.update();
+    renderer.render( scene, camera );
+}
+
 function detectCorrectParameter(url){
 	if(url.startsWith("Q") && url.includes("signlist")){
 		return "?tp="+url.replaceAll("/","")
