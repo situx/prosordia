@@ -29,7 +29,7 @@ function initThreeJS(domelement,url){
 		const material = new THREE.MeshPhongMaterial({
 			color: 0xffffff,
 			flatShading: true,
-			vertexColors: THREE.VertexColors,
+			//vertexColors: THREE.VertexColors,
 			wireframe: false
 		});
 		const mesh = new THREE.Mesh(object, material);
