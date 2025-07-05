@@ -24,6 +24,7 @@ function initThreeJS(domelement,url){
 	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( width, height);
+	document.getElementById(domelement).appendChild( renderer.domElement );
 	var loader = new THREE.PLYLoader();
 	loader.load(url, function(object){
 		const material = new THREE.MeshPhongMaterial({
