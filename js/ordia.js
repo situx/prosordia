@@ -18,8 +18,9 @@ function initThreeJS(domelement,url){
 	height=500
     width=480
 	scene = new THREE.Scene();
-	//const gui = new dat.GUI({autoPlace: false})
-	//gui.domElement.id="gui"
+	/*const gui = new dat.GUI({autoPlace: false})
+	gui.domElement.id="gui"
+    $("#threejsnav").append($(gui.domElement))*/
 	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( width, height);
