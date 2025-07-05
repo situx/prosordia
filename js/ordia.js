@@ -18,14 +18,14 @@ function initThreeJS(domelement,url){
 	height=500
     width=480
 	scene = new THREE.Scene();
-	/*const gui = new GUI({autoPlace: false})
+	const gui = new GUI({autoPlace: false})
 	//gui.domElement.id="gui"
     $("#threejsnav").append($(gui.domElement))
 	const geometryFolder = gui.addFolder("Mesh");
 	geometryFolder.open();
 	const lightingFolder = geometryFolder.addFolder("Lighting");
 	const geometryF = geometryFolder.addFolder("Geometry");
-	geometryF.open();*/
+	geometryF.open();
 	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( width, height);
