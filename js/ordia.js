@@ -13,6 +13,7 @@ function applyPropertyMapping(thequery,propertyMapping){
 let camera, scene, renderer,controls,axesHelper,box,center,size;
 
 function initThreeJS(domelement,url){
+	const objects=new THREE.Group();
 	height=500
     width=480
 	scene = new THREE.Scene();
@@ -37,6 +38,22 @@ function initThreeJS(domelement,url){
 			camera.lookAt( objects.children[0].position );
 		}
 	});
+	camera = new THREE.PerspectiveCamera(90,width / height, 0.1, 2000 );
+    scene.add(new THREE.AmbientLight(0x222222));
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(20, 20, 0);
+    scene.add(light);
+	axesHelper = new THREE.AxesHelper( Math.max(1000, 1000, 1000) );
+    scene.add( axesHelper );
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+    //controls.target.set( centervec.x,centervec.y,centervec.z );
+    controls.target.set( 0,0,0 );
+    camera.position.x= 0
+    camera.position.y= 0
+    camera.position.z = 150;
+    controls.maxDistance= Math.max(1000, 1000, 1000)
+    controls.update();
+	animate()
 }
 
 function detectCorrectParameter(url){
