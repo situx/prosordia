@@ -18,9 +18,14 @@ function initThreeJS(domelement,url){
 	height=500
     width=480
 	scene = new THREE.Scene();
-	/*const gui = new dat.GUI({autoPlace: false})
-	gui.domElement.id="gui"
-    $("#threejsnav").append($(gui.domElement))*/
+	const gui = new dat.GUI({autoPlace: false})
+	//gui.domElement.id="gui"
+    $("#threejsnav").append($(gui.domElement))
+	const geometryFolder = gui.addFolder("Mesh");
+	geometryFolder.open();
+	const lightingFolder = geometryFolder.addFolder("Lighting");
+	const geometryF = geometryFolder.addFolder("Geometry");
+	geometryF.open();
 	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( width, height);
@@ -45,6 +50,9 @@ function initThreeJS(domelement,url){
     var light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(20, 20, 0);
     scene.add(light);
+	lightingFolder.add(light.position, "x").min(-5).max(5).step(0.01).name("X Position")
+	lightingFolder.add(light.position, "y").min(-5).max(5).step(0.01).name("Y Position")
+	lightingFolder.add(light.position, "z").min(-5).max(5).step(0.01).name("Z Position")
 	axesHelper = new THREE.AxesHelper( Math.max(1000, 1000, 1000) );
     scene.add( axesHelper );
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -55,6 +63,25 @@ function initThreeJS(domelement,url){
     camera.position.z = 150;
     controls.maxDistance= Math.max(1000, 1000, 1000)
     controls.update();
+	    const updateCamera = () => {
+		camera.updateProjectionMatrix();
+	}
+	const cameraFolder = geometryFolder.addFolder("Camera");
+	cameraFolder.add(camera, 'fov', 1, 180).name('Zoom').onChange(updateCamera);
+    cameraFolder.add(camera.position, 'x').min(-500).max(500).step(5).name("X Position").onChange(updateCamera);
+    cameraFolder.add(camera.position, 'y').min(-500).max(500).step(5).name("Y Position").onChange(updateCamera);
+    cameraFolder.add(camera.position, 'z').min(-500).max(500).step(5).name("Z Position").onChange(updateCamera);
+    gui.add(objects, 'visible').name('Meshes')
+    gui.add(annotations, 'visible').name('Annotations')
+    gui.add(axesHelper, 'visible').name('Axis Helper')
+    gui.add({"FullScreen":toggleFullScreen2}, 'FullScreen')
+    document.addEventListener("fullscreenchange",function(){
+        if(document.fullscreenElement){
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize( width, height );
+        }
+    })
 	animate()
 }
 
