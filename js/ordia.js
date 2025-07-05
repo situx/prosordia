@@ -522,8 +522,17 @@ function sparqlToDataTable(sparql, element, options={}) {
 
 function initThreeJSFromData(convertedData){
 	console.log(convertedData)
+	found=false
 	for(dat of convertedData.data){
-		
+		if(dat["description"].includes("3d model")){
+			if(dat["value"].endsWith(".ply")){
+				initThreeJS("threejs",dat["value"])
+				found=true
+			}
+		}
+	}
+	if(found){
+		$('#show3DButton').css("visibility", "visible");
 	}
 }
 

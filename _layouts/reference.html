@@ -286,10 +286,10 @@ $(document).ready(function() {
 <button id="closeButtonFC" onclick="document.getElementById('fcdialog').close()">Close</button>
 </dialog>  
 
-<dialog id="3ddialog">
+<dialog id="3ddialog" style="width:50%">
 <h3>3D View for ${ qLabel } (${ q })</h3>
 <div id="wrapper" style="display: flex;"><div id="threejs" class="threejscontainer" style="max-width:485px;max-height:500px"></div><div id="threejsnav" style="flex: 1;"></div></div>
-<button id="closeButton3D">Close</button>
+<button id="closeButton3D" onclick="document.getElementById('3ddialog').close()">Close</button>
 </dialog>
   <h1>Reference: ${ qLabel } (${ q })</h1>
 
@@ -307,7 +307,7 @@ $(document).ready(function() {
   <hr>
 
   <h2>Reference Data</h2>
-
+  <button id="show3DButton" style="visibility:hidden" onclick="document.getElementById('3ddialog').showModal()" class="btn btn-outline-dark btn-sm">Show FatCross</button>
   <table class="table table-hover" id="lexemes"></table>
 
   <h2>Images</h2>
