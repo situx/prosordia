@@ -1,7 +1,12 @@
 ---
 layout: base
 ---
-
+<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/TrackballControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/PLYLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/threex.domevents@1.0.1/threex.domevents.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
 <script type="text/javascript">
    lexemesSparql = `
 # Data for a specific lexeme
@@ -283,6 +288,7 @@ $(document).ready(function() {
 
 <dialog id="3ddialog">
 <h3>3D View for ${ qLabel } (${ q })</h3>
+<div id="wrapper" style="display: flex;"><div id="threejs" class="threejscontainer" style="max-width:485px;max-height:500px"></div><div id="threejsnav" style="flex: 1;"></div></div>
 <button id="closeButton3D">Close</button>
 </dialog>
   <h1>Reference: ${ qLabel } (${ q })</h1>

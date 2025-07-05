@@ -10,6 +10,35 @@ function applyPropertyMapping(thequery,propertyMapping){
 	return thequery
 }
 
+let camera, scene, renderer,controls,axesHelper,box,center,size;
+
+function initThreeJS(domelement,url){
+	height=500
+    width=480
+	scene = new THREE.Scene();
+	const gui = new dat.GUI({autoPlace: false})
+	gui.domElement.id="gui"
+	renderer = new THREE.WebGLRenderer( { antialias: false } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( width, height);
+	var loader = new THREE.PLYLoader();
+	loader.load(url, function(object){
+		const material = new THREE.MeshPhongMaterial({
+			color: 0xffffff,
+			flatShading: true,
+			vertexColors: THREE.VertexColors,
+			wireframe: false
+		});
+		const mesh = new THREE.Mesh(object, material);
+		objects.add(mesh);
+		scene.add(objects);
+		addRotationControls(object,geometryF,objects)
+		if(objects.children.length>0){
+			camera.lookAt( objects.children[0].position );
+		}
+	});
+}
+
 function detectCorrectParameter(url){
 	if(url.startsWith("Q") && url.includes("signlist")){
 		return "?tp="+url.replaceAll("/","")
@@ -484,8 +513,18 @@ function sparqlToDataTable(sparql, element, options={}) {
 	if(callback.includes("fc")){
 		createFatCross(convertedData)
 	}
+	if(callback.includes("3d")){
+		initThreeJSFromData(convertedData)
+	}
     }, "json");
 	
+}
+
+function initThreeJSFromData(convertedData){
+	console.log(convertedData)
+	for(dat of convertedData.data){
+		
+	}
 }
 
 function createFatCross(convertedData){
