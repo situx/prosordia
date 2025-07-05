@@ -33,7 +33,6 @@ function initThreeJS(domelement,url){
 		const mesh = new THREE.Mesh(object, material);
 		objects.add(mesh);
 		scene.add(objects);
-		addRotationControls(object,geometryF,objects)
 		if(objects.children.length>0){
 			camera.lookAt( objects.children[0].position );
 		}
