@@ -574,9 +574,9 @@ function sparqlToDataTable(sparql, element, options={}) {
 
 function initThreeJSButton(){
   $('#load3DModel').hide()
-  initThreeJS("threejs",3dmodelurl)
+  initThreeJS("threejs",model3durl)
 }
-var 3dmodelurl=""
+var model3durl=""
 function initThreeJSFromData(convertedData){
 	console.log(convertedData)
 	found=false
@@ -586,7 +586,7 @@ function initThreeJSFromData(convertedData){
 				url=dat["value_"].replace("</a>","")
 				url=url.substring(url.indexOf(">")+1)
 				//initThreeJS("threejs",url)
-				3dmodelurl=url
+				model3durl=url
 				found=true
 			}
 		}
