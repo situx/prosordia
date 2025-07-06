@@ -330,7 +330,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 						}
 						colval+=' href="'+linkarray[counter]+'"><img loading="lazy" src="' + item.replace("http:","https:") + '" height="50"></a>&nbsp;'
 					}else{
-						colval+='<img loading="lazy" src="' + item.replace("http:","https:") + '" height="50">&nbsp;'
+						colval+='<a href="'+item.replace("http:","https:")+'" target="_blank"><img loading="lazy" src="' + item.replace("http:","https:") + '" height="50"></a>&nbsp;'
 					}
 					counter+=1
 				}
@@ -343,7 +343,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 					}
 					convertedRow[key] = ' href="'+linkarray[0]+'"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
 				}else{
-					convertedRow[key] = '<img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50">';
+					convertedRow[key] = '<a href="'+item.replace("http:","https:")+'" target="_blank"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
 				}
 							
 			}
