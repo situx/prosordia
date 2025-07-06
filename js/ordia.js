@@ -343,7 +343,7 @@ function convertDataTableData(data, columns, linkPrefixes={},linkParams={}) {
 					}
 					convertedRow[key] = ' href="'+linkarray[0]+'"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
 				}else{
-					convertedRow[key] = '<a href="'+item.replace("http:","https:")+'" target="_blank"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
+					convertedRow[key] = '<a href="'+data[i][key].replace("http:","https:")+'" target="_blank"><img loading="lazy" src="' + data[i][key].replace("http:","https:") + '" height="50"></a>';
 				}
 							
 			}
