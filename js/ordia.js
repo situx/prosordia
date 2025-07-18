@@ -523,7 +523,7 @@ function initOSD(convertedData){
 	console.log(convertedData)
 	theimages=[]
 	for(dat of convertedData.data){
-		theimages.push(dat["image"].substring(dat["image"].indexOf("src=\"")+5,dat["image"].indexOf("\"",dat["image"].indexOf("src=\"")+5)))
+		theimages.push({"type":"image","url":dat["image"].substring(dat["image"].indexOf("src=\"")+5,dat["image"].indexOf("\"",dat["image"].indexOf("src=\"")+5))})
 	}
 	console.log(theimages)
 	if(typeof(viewer)==='undefined'){
@@ -531,9 +531,14 @@ function initOSD(convertedData){
 			id: "openseadragon1",
 			prefixUrl: "https://situx.github.io/prosordia/openseadragon/images/",
 			sequenceMode: true,
+			autoHideControls: true,
 			toolbar: "toolbarDiv",
 			showRotationControl: true,
+			showFlipControl: true,
 			showReferenceStrip: true,
+			gestureSettingsTouch: {
+				pinchRotate: true
+			},
 			tileSources: theimages
 		});
 	}
