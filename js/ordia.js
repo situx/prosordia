@@ -535,9 +535,9 @@ function initOSD(convertedData){
 			toolbar: "toolbarDiv",
 			showRotationControl: true,
 			showFlipControl: true,
-			showNavigator:  true,
+			//showNavigator:  true,
 			preserveViewport: true, 
-			showReferenceStrip: true,
+			//showReferenceStrip: true,
 			gestureSettingsTouch: {
 				pinchRotate: true
 			},
