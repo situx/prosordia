@@ -528,6 +528,7 @@ function initOSD(convertedData){
 	if(typeof(viewer)==='undefined'){
 		var viewer = OpenSeadragon({
 			id: "openseadragon1",
+			prefixUrl: "https://prosordia.github.io/openseadragon/images/",
 			sequenceMode: true,
 			toolbar: "toolbarDiv",
 			showRotationControl: true,
