@@ -525,15 +525,14 @@ function initOSD(convertedData){
 	for(dat of convertedData.data){
 		theimages.push(dat["image"].substring(dat["image"].indexOf("src=\"")+5,dat["image"].indexOf("\"",dat["image"].indexOf("src=\"")+5)))
 	}
-	if(typeof(viewer)!=='undefined'){
+	if(typeof(viewer)==='undefined'){
 		var viewer = OpenSeadragon({
 			id: "openseadragon1",
 			sequenceMode: true,
 			toolbar: "toolbarDiv",
 			showRotationControl: true,
 			showReferenceStrip: true,
-			prefixUrl: "/openseadragon/images/",
-			 tileSources: theimages
+			tileSources: theimages
 		});
 	}
 	if(theimages.length>0){
