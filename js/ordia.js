@@ -363,7 +363,7 @@ function sparqlToDataTable(sparql, element, options={}) {
     
     var post_url = "https://database.factgrid.de/sparql";
     var post_data = "query=" + encodeURIComponent(sparql) + '&format=json'
-	if(typeof(desc)!=='undefined'){
+	if(desc!=""){
 		$(element).append(
 			'<caption><a href="https://database.factgrid.de/query#' + 
 			encodeURIComponent(sparql) +	
