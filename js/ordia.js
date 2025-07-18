@@ -525,9 +525,11 @@ function initOSD(convertedData){
 	for(dat of convertedData.data){
 		theimages.push(dat["image"].substring(dat["image"].indexOf("src=\"")+5,dat["image"].indexOf("\"",dat["image"].indexOf("src=\"")+5)))
 	}
+	console.log(theimages)
 	if(typeof(viewer)==='undefined'){
 		var viewer = OpenSeadragon({
 			id: "openseadragon1",
+			prefixUrl: "https://situx.github.io/prosordia/openseadragon/images/",
 			sequenceMode: true,
 			toolbar: "toolbarDiv",
 			showRotationControl: true,
