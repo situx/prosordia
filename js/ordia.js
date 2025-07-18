@@ -485,6 +485,9 @@ function sparqlToDataTable(sparql, element, options={}) {
 	if(callback.includes("fc")){
 		createFatCross(convertedData)
 	}
+	if(callback.includes("osd")){
+		initOSD(convertedData)
+	}
 	if(callback.includes("3d")){
 		initThreeJSFromData(convertedData)
 	}

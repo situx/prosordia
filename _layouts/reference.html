@@ -8,7 +8,7 @@ layout: base
 <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/PLYLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/threex.domevents@1.0.1/threex.domevents.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.20.0/dist/lil-gui.umd.min.js"></script>
-<script src="js/threejssetup.js"></script>
+<script src="{{site.baseurl}}/js/threejssetup.js"></script>
 <script type="text/javascript">
    lexemesSparql = `
 # Data for a specific lexeme
@@ -263,7 +263,7 @@ $(document).ready(function() {
 			    }});
       sparqlToDataTable(imagesSparql, "#images",
 			options={
-				"callback":["fc"],
+				"callback":["fc","osd"],
 			    'linkPrefixes': {
 				'lexeme': '../l',
 				'form': '../lf'
