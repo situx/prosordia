@@ -1,12 +1,14 @@
 ---
 layout: base
 ---
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/5.0.1/openseadragon.min.js" integrity="sha512-gPZzE+sKmE0kvcjMxW431ef5b5T5QOADV9Gij0isPw2oLATd1IZW7dmDmKh7F2e5BfwjQyAfFp3/OF0fVMOF7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/TrackballControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/PLYLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/threex.domevents@1.0.1/threex.domevents.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.20.0/dist/lil-gui.umd.min.js"></script>
+<script src="js/threejssetup.js"></script>
 <script type="text/javascript">
    lexemesSparql = `
 # Data for a specific lexeme
@@ -287,6 +289,14 @@ $(document).ready(function() {
 <button id="closeButtonFC" onclick="document.getElementById('fcdialog').close()">Close</button>
 </dialog>  
 
+<dialog id="osddialog" style="width:50%">
+<h3>Image Viewer for ${ qLabel } (${ q })</h3>
+<div id="toolbarDiv"></div>
+<div id="openseadragon1" style="width: 800px; height: 600px;"></div>
+
+<button id="closeButtonOSD" onclick="document.getElementById('osddialog').close()">Close</button>
+</dialog> 
+
 <dialog id="3ddialog" style="width:50%">
 <h3>3D View for ${ qLabel } (${ q })</h3>
 <div id="wrapper" style="display: flex;"><div id="threejs" class="threejscontainer" style="width:485px;height:500px"></div><div id="threejsnav" style="flex: 1;"></div></div>
@@ -313,7 +323,7 @@ $(document).ready(function() {
   <table class="table table-hover" id="lexemes"></table>
 
   <h2>Images</h2>
-  <button id="showFCButton" style="visibility:hidden" onclick="document.getElementById('fcdialog').showModal()" class="btn btn-outline-dark btn-sm">Show FatCross</button>
+  <button id="showOSDButton" style="visibility:hidden" onclick="document.getElementById('osddialog').showModal()" class="btn btn-outline-dark btn-sm">Image Viewer</button><button id="showFCButton" style="visibility:hidden" onclick="document.getElementById('fcdialog').showModal()" class="btn btn-outline-dark btn-sm">Show FatCross</button>
   <table class="table table-hover" id="images"></table>
  
   <h2>Names on medium</h2>
