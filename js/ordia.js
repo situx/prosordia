@@ -320,6 +320,7 @@ function sparqlToDataTable(sparql, element, options={}) {
     // Options: linkPrefixes={}, paging=true
 	console.log(options)
     var linkPrefixes = (typeof options.linkPrefixes === 'undefined') ? {} : options.linkPrefixes;
+	var desc = (typeof options.desc === 'undefined') ? "" : options.desc;
 	var linkParams = (typeof options.linkParams === 'undefined') ? {} : options.linkParams;
     var paging = (typeof options.paging === 'undefined') ? true : options.paging;
     var sDom = (typeof options.sDom === 'undefined') ? 'lfrtip' : options.sDom;
@@ -362,7 +363,17 @@ function sparqlToDataTable(sparql, element, options={}) {
     
     var post_url = "https://database.factgrid.de/sparql";
     var post_data = "query=" + encodeURIComponent(sparql) + '&format=json'
-    
+	if(typeof(desc)!=='undefined'){
+		$(element).append(
+			'<caption><a href="https://database.factgrid.de/query#' + 
+			encodeURIComponent(sparql) +	
+			'">Edit on database.factgrid.de/query/</a><span style="float:right"><button disabled class="btn btn-outline-dark btn-sm" id="infoButton" title="'+desc+'">&#9432;</button></span></caption>');	
+	}else{
+		$(element).append(
+			'<caption><a href="https://database.factgrid.de/query#' + 
+			encodeURIComponent(sparql) +	
+			'">Edit on database.factgrid.de/query/</a></caption>');		
+	}
     $.post(post_url, post_data, function(response) {
 	var simpleData = sparqlDataToSimpleData(response);
 
@@ -477,10 +488,7 @@ function sparqlToDataTable(sparql, element, options={}) {
 	    sDom: sDom,
 	});
 
-	$(element).append(
-	    '<caption><a href="https://database.factgrid.de/query#' + 
-		encodeURIComponent(sparql) +	
-		'">Edit on database.factgrid.de/query/</a></caption>');
+
 	//console.log(callback)
 	if(callback.includes("fc")){
 		createFatCross(convertedData)
